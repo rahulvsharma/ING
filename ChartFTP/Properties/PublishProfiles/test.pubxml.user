@@ -1,0 +1,1438 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>c:\PublishedSite</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="asc.gif">
+      <publishTime>10/20/2015 16:25:12</publishTime>
+    </File>
+    <File Include="bin/ChartFTP.dll">
+      <publishTime>10/20/2015 16:51:08</publishTime>
+    </File>
+    <File Include="bin/MySql.Data.Entity.EF6.dll">
+      <publishTime>06/19/2015 01:01:32</publishTime>
+    </File>
+    <File Include="bin/MySql.Fabric.Plugin.dll">
+      <publishTime>06/19/2015 01:01:28</publishTime>
+    </File>
+    <File Include="desc.gif">
+      <publishTime>10/20/2015 16:25:12</publishTime>
+    </File>
+    <File Include="exporting.js">
+      <publishTime>10/07/2015 13:34:23</publishTime>
+    </File>
+    <File Include="ExternalPluginsStyles.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="HighStock.js">
+      <publishTime>10/07/2015 14:48:02</publishTime>
+    </File>
+    <File Include="img/arrow.png">
+      <publishTime>10/07/2015 11:35:48</publishTime>
+    </File>
+    <File Include="img/dark_leather.png">
+      <publishTime>10/07/2015 11:35:30</publishTime>
+    </File>
+    <File Include="index.aspx">
+      <publishTime>10/20/2015 17:17:21</publishTime>
+    </File>
+    <File Include="ING/images/main-bg.png">
+      <publishTime>09/03/2015 10:18:55</publishTime>
+    </File>
+    <File Include="ING/index.html">
+      <publishTime>09/07/2015 12:30:10</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery-ui.min.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.colorhelpers.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.candle.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.canvas.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.categories.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.crosshair.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.errorbars.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.fillbetween.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.image.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.navigate.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.pie.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.resize.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.selection.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.stack.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.symbol.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.threshold.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.flot.time.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/jquery.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/JUMFlot.min.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/scripts/knockout.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="ING/styles/.DS_Store">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="ING/styles/ExternalPluginsStyles.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="ING/styles/jquery-ui.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="ING/styles/jquery-ui.min.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="ING/styles/jquery-ui.structure.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="ING/styles/jquery-ui.structure.min.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="ING/styles/jqueryStyles.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="ING/styles/style.css">
+      <publishTime>09/03/2015 11:24:06</publishTime>
+    </File>
+    <File Include="jquery-ui.min.css">
+      <publishTime>10/07/2015 11:44:38</publishTime>
+    </File>
+    <File Include="jquery-ui.min.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="jquery-ui.structure.min.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="jquery.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="jqueryStyles.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="jsgrid-theme.min.css">
+      <publishTime>10/13/2015 09:35:40</publishTime>
+    </File>
+    <File Include="jsgrid.min.css">
+      <publishTime>10/13/2015 09:35:19</publishTime>
+    </File>
+    <File Include="jsgrid.min.js">
+      <publishTime>10/13/2015 09:35:53</publishTime>
+    </File>
+    <File Include="style.css">
+      <publishTime>10/20/2015 16:42:18</publishTime>
+    </File>
+    <File Include="tabs.js">
+      <publishTime>10/07/2015 12:27:35</publishTime>
+    </File>
+    <File Include="tabs_old.js">
+      <publishTime>10/07/2015 13:22:18</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/amcharts.js">
+      <publishTime>09/30/2015 13:31:38</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/amstock.js">
+      <publishTime>09/30/2015 13:31:38</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIcon.gif">
+      <publishTime>09/30/2015 13:31:38</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconBlack.gif">
+      <publishTime>09/30/2015 13:31:39</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconH.gif">
+      <publishTime>09/30/2015 13:31:39</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconHBlack.gif">
+      <publishTime>09/30/2015 13:31:39</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBig.png">
+      <publishTime>09/30/2015 13:31:39</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBig.svg">
+      <publishTime>09/30/2015 13:31:39</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBigBlack.png">
+      <publishTime>09/30/2015 13:31:39</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBigBlack.svg">
+      <publishTime>09/30/2015 13:31:40</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBigBlackH.png">
+      <publishTime>09/30/2015 13:31:40</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBigBlackH.svg">
+      <publishTime>09/30/2015 13:31:40</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBigH.png">
+      <publishTime>09/30/2015 13:31:40</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectBigH.svg">
+      <publishTime>09/30/2015 13:31:40</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmall.png">
+      <publishTime>09/30/2015 13:31:40</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmall.svg">
+      <publishTime>09/30/2015 13:31:41</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmallBlack.png">
+      <publishTime>09/30/2015 13:31:41</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmallBlack.svg">
+      <publishTime>09/30/2015 13:31:41</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmallBlackH.png">
+      <publishTime>09/30/2015 13:31:41</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmallBlackH.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmallH.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRectSmallH.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBig.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBig.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBigBlack.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBigBlack.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBigBlackH.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBigBlackH.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBigH.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundBigH.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmall.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmall.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmallBlack.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmallBlack.svg">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmallBlackH.png">
+      <publishTime>09/30/2015 13:31:42</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmallBlackH.svg">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmallH.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/dragIconRoundSmallH.svg">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/eraserIcon.gif">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/eraserIcon.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/eraserIcon.svg">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/eraserIconH.gif">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/eraserIconH.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/eraserIconH.svg">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/export.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/exportWhite.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/lens.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/lens.svg">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/lensWhite.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/lensWhite_old.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/lens_old.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/lens_white.svg">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/pencilIcon.gif">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/pencilIcon.png">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/pencilIcon.svg">
+      <publishTime>09/30/2015 13:31:43</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/pencilIconH.gif">
+      <publishTime>09/30/2015 13:31:54</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/pencilIconH.png">
+      <publishTime>09/30/2015 13:31:54</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/pencilIconH.svg">
+      <publishTime>09/30/2015 13:31:54</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/xIcon.gif">
+      <publishTime>09/30/2015 13:31:54</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/xIcon.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/xIcon.svg">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/xIconH.gif">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/xIconH.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/images/xIconH.svg">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/az.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/bg.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/de.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/es.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/fi.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/fo.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/fr.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/hr.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/hu.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/id.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/is.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/it.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/lt.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/lv.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/mk.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/mn.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/mt.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/nl.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/no.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/pl.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/pt.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/ro.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/ru.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/rw.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/sk.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/so.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/th.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/lang/tr.js">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern1.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern10.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern11.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern12.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern13.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern14.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern15.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern16.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern17.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern18.png">
+      <publishTime>09/30/2015 13:31:55</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern19.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern2.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern20.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern21.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern3.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern4.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern5.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern6.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern7.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern8.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/black/pattern9.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/chalk/pattern1.jpg">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/chalk/pattern1r.jpg">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/chalk/pattern2.jpg">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/chalk/pattern3.jpg">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/chalk/pattern4.jpg">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/chalk/pattern5.jpg">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/chalk/pattern6.jpg">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern1.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern10.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern11.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern12.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern13.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern14.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern15.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern16.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern17.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern18.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern19.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern2.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern20.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern21.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern3.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern4.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern5.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern6.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern7.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern8.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/patterns/white/pattern9.png">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/dataloader.js">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/dataloader.min.js">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/gauge.json">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/map.json">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/MSFT.csv">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/MSFT_events.csv">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/pie.csv">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/pie.json">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/serial.csv">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/serial.json">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/serial2.json">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/data/TXN.csv">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/gauge_json.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/map_json.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/pie_csv.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/pie_json.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/serial2_json.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/serial_csv.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/serial_json.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/serial_with_dynamic_graphs.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/examples/stock_csv_data_and_events.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/lang/en.js">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/lang/lt.js">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/license.txt">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/dataloader/readme.md">
+      <publishTime>09/30/2015 13:31:56</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/export.config.advanced.js">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/export.config.default.js">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/funnel.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/gantt.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/gauge.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/images/bicycle.png">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/images/car.png">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/images/motorcycle.png">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/index.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/map.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/pie1.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/pie2.html">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/pie3.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/pie4.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/radar.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/serial1.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/serial2.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/serial3.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/stock.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/examples/xy.html">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/export.css">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/export.js">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/export.min.js">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/lang/de.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/lang/en.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/lang/lt.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/lang/pl.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/blob.js/blob.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/fabric.js/fabric.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/fabric.js/fabric.min.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/FileSaver.js/FileSaver.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/FileSaver.js/FileSaver.min.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/jszip/jszip.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/jszip/jszip.min.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/pdfmake/pdfmake.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/pdfmake/pdfmake.min.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/pdfmake/pdfmake.min.js.map">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/pdfmake/vfs_fonts.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/xlsx/LICENSE">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/xlsx/xlsx.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/xlsx/xlsx.min.js">
+      <publishTime>09/30/2015 13:31:58</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/libs/xlsx/xlsx.min.map">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/LICENSE">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/README.md">
+      <publishTime>09/30/2015 13:31:57</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/1.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/10.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/11.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/12.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/13.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/14.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/15.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/16.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/17.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/18.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/19.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/2.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/20.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/21.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/22.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/23.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/24.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/25.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/26.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/27.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/28.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/29.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/3.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/30.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/31.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/4.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/5.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/6.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/7.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/8.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/export/shapes/9.svg">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/funnel.html">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/gantt.html">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/gauge.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/images/bicycle.png">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/images/car.png">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/images/motorcycle.png">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/index.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/map.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/pie1.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/pie2.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/pie3.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/radar.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/serial1.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/serial2.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/serial3.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/stock.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/examples/xy.html">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/license.txt">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/readme.md">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/responsive.js">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/responsive.min.js">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/plugins/responsive/responsive.min.js.map">
+      <publishTime>09/30/2015 13:31:59</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/serial.js">
+      <publishTime>09/30/2015 13:31:38</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/style.css">
+      <publishTime>09/30/2015 13:31:38</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/themes/black.js">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/themes/chalk.js">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/themes/dark.js">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/themes/light.js">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/amcharts/themes/patterns.js">
+      <publishTime>09/30/2015 13:32:00</publishTime>
+    </File>
+    <File Include="v1-2/css/bootstrap/bootstrap.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/calendar.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/elements.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/fileinput.min.css">
+      <publishTime>09/03/2015 14:32:38</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/jquery-ui.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/jquery-ui.min.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/jquery-ui.structure.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/jquery-ui.structure.min.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/jqueryStyles.css">
+      <publishTime>09/03/2015 10:18:57</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/layout.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/compiled/wizard.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/bootstrap-timepicker.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/bootstrap-wizard.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/datepicker.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/daterangepicker.css">
+      <publishTime>12/13/2014 23:14:03</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/dropzone.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/font-awesome.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/fullcalendar.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/fullcalendar.print.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/jquery-jvectormap-1.2.2.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/jquery.nouislider.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/morris.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/select2.css">
+      <publishTime>12/13/2014 23:14:04</publishTime>
+    </File>
+    <File Include="v1-2/css/libs/xcharts.css">
+      <publishTime>12/13/2014 23:14:05</publishTime>
+    </File>
+    <File Include="v1-2/default.aspx">
+      <publishTime>09/30/2015 12:58:50</publishTime>
+    </File>
+    <File Include="v1-2/fileUpload.html">
+      <publishTime>09/04/2015 09:31:38</publishTime>
+    </File>
+    <File Include="v1-2/fonts/fontawesome-webfontba72.eot">
+      <publishTime>12/13/2014 23:14:05</publishTime>
+    </File>
+    <File Include="v1-2/fonts/fontawesome-webfontba72.svg">
+      <publishTime>12/13/2014 23:14:06</publishTime>
+    </File>
+    <File Include="v1-2/fonts/fontawesome-webfontba72.ttf">
+      <publishTime>12/13/2014 23:14:06</publishTime>
+    </File>
+    <File Include="v1-2/fonts/fontawesome-webfontba72.woff">
+      <publishTime>12/13/2014 23:14:05</publishTime>
+    </File>
+    <File Include="v1-2/fonts/fontawesome-webfontd41d.eot">
+      <publishTime>12/13/2014 23:14:05</publishTime>
+    </File>
+    <File Include="v1-2/fonts/glyphicons-halflings-regular.eot">
+      <publishTime>12/13/2014 23:14:05</publishTime>
+    </File>
+    <File Include="v1-2/fonts/glyphicons-halflings-regular.svg">
+      <publishTime>12/13/2014 23:14:06</publishTime>
+    </File>
+    <File Include="v1-2/fonts/glyphicons-halflings-regular.ttf">
+      <publishTime>12/13/2014 23:14:06</publishTime>
+    </File>
+    <File Include="v1-2/fonts/glyphicons-halflings-regular.woff">
+      <publishTime>12/13/2014 23:14:06</publishTime>
+    </File>
+    <File Include="v1-2/fonts/glyphicons-halflings-regulard41d.eot">
+      <publishTime>12/13/2014 23:14:05</publishTime>
+    </File>
+    <File Include="v1-2/graph.aspx">
+      <publishTime>10/07/2015 00:02:38</publishTime>
+    </File>
+    <File Include="v1-2/graphs-flot.html">
+      <publishTime>09/04/2015 09:53:15</publishTime>
+    </File>
+    <File Include="v1-2/img/error-404-v2.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/error-404-v3.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/error-500-v1.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/logo-login.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/logo.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/pricing-star.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/admin-devices.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/angelina-300.jpg">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-img-2.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-img.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-small-1.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-small-180-3.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-small-2.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-small-260-1.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-small-260-2.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-sample-small-3.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-template-1.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-template-2.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-template-3.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/email-template-4.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/emma-300.jpg">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/emma.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/george.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/ipad.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/jessica.jpg">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/kunis-300.jpg">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/kunis.png">
+      <publishTime>12/13/2014 23:14:08</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/lima-300.jpg">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/messages-photo-1.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/messages-photo-2.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/messages-photo-3.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/miranda-560-300.png">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/profile-photo.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/robert-300.jpg">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/robert.png">
+      <publishTime>12/13/2014 23:14:09</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/ryan-300.jpg">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/ryan.png">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/scarlet-159.png">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/scarlet.png">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/scarlett-300.jpg">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/img/samples/user-profile-1.png">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/img/select2-spinner.gif">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/select2.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/select2x2.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/spritemap%402x.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/img/spritemap.png">
+      <publishTime>12/13/2014 23:14:07</publishTime>
+    </File>
+    <File Include="v1-2/index-2.html">
+      <publishTime>09/03/2015 17:21:41</publishTime>
+    </File>
+    <File Include="v1-2/js/bootstrap-datepicker.js">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/js/bootstrap-timepicker.min.js">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/js/bootstrap-wizard.js">
+      <publishTime>12/13/2014 23:14:11</publishTime>
+    </File>
+    <File Include="v1-2/js/bootstrap-wysiwyg.js">
+      <publishTime>12/13/2014 23:14:10</publishTime>
+    </File>
+    <File Include="v1-2/js/bootstrap.js">
+      <publishTime>12/13/2014 23:14:11</publishTime>
+    </File>
+    <File Include="v1-2/js/ckeditor/ckeditor.js">
+      <publishTime>12/13/2014 23:14:17</publishTime>
+    </File>
+    <File Include="v1-2/js/d3.min.js">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/js/daterangepicker.js">
+      <publishTime>12/13/2014 23:14:11</publishTime>
+    </File>
+    <File Include="v1-2/js/dropzone.js">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/js/fileinput.min.js">
+      <publishTime>09/03/2015 14:33:13</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.js">
+      <publishTime>12/13/2014 23:14:17</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.min.js">
+      <publishTime>12/13/2014 23:14:16</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.orderBars.js">
+      <publishTime>12/13/2014 23:14:17</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.pie.min.js">
+      <publishTime>12/13/2014 23:14:17</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.resize.min.js">
+      <publishTime>12/13/2014 23:14:16</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.stack.min.js">
+      <publishTime>12/13/2014 23:14:17</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.threshold.js">
+      <publishTime>12/13/2014 23:14:17</publishTime>
+    </File>
+    <File Include="v1-2/js/flot/jquery.flot.time.min.js">
+      <publishTime>12/13/2014 23:14:17</publishTime>
+    </File>
+    <File Include="v1-2/js/fullcalendar.min.js">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/js/gdp-data.js">
+      <publishTime>12/13/2014 23:14:11</publishTime>
+    </File>
+    <File Include="v1-2/js/hogan.js">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery-jvectormap-1.2.2.min.js">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery-jvectormap-world-merc-en.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery-ui.custom.min.js">
+      <publishTime>12/13/2014 23:14:15</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery-ui.min.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.colorhelpers.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.axislabels.js">
+      <publishTime>09/10/2015 12:43:05</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.candle.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.canvas.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.categories.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.crosshair.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.errorbars.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.fillbetween.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.image.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.navigate.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.pie.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.resize.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.selection.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.stack.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.symbol.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.threshold.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.flot.time.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.hotkeys.js">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.knob.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.maskedinput.min.js">
+      <publishTime>12/13/2014 23:14:12</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.nestable.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.nouislider.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.pwstrength.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/jquery.slimscroll.min.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/JUMFlot.min.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/knockout.js">
+      <publishTime>09/03/2015 10:18:56</publishTime>
+    </File>
+    <File Include="v1-2/js/moment.min.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/morris.js">
+      <publishTime>12/13/2014 23:14:14</publishTime>
+    </File>
+    <File Include="v1-2/js/morris.min.js">
+      <publishTime>12/13/2014 23:14:14</publishTime>
+    </File>
+    <File Include="v1-2/js/rainbow.min.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/raphael-min.js">
+      <publishTime>12/13/2014 23:14:14</publishTime>
+    </File>
+    <File Include="v1-2/js/scripts.js">
+      <publishTime>12/13/2014 23:14:13</publishTime>
+    </File>
+    <File Include="v1-2/js/select2.min.js">
+      <publishTime>12/13/2014 23:14:15</publishTime>
+    </File>
+    <File Include="v1-2/js/typeahead.min.js">
+      <publishTime>12/13/2014 23:14:14</publishTime>
+    </File>
+    <File Include="v1-2/js/wizard.js">
+      <publishTime>12/13/2014 23:14:15</publishTime>
+    </File>
+    <File Include="v1-2/js/xcharts.js">
+      <publishTime>12/13/2014 23:14:15</publishTime>
+    </File>
+    <File Include="v1-2/report.aspx">
+      <publishTime>10/01/2015 11:17:06</publishTime>
+    </File>
+    <File Include="view_sort_ascending.png">
+      <publishTime>10/20/2015 15:37:29</publishTime>
+    </File>
+    <File Include="view_sort_descending.png">
+      <publishTime>10/20/2015 15:37:31</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>09/08/2015 12:00:16</publishTime>
+    </File>
+  </ItemGroup>
+</Project>

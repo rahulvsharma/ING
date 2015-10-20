@@ -1,0 +1,31 @@
+﻿<logo en="ING" jp="ローソクチャート表示" />
+
+<username en="Hi, Rahul" jp="ようこそ今野さん" />
+<menuoptions en="Profile" jp="プロファイル" />
+<menuoptions en="Settings" jp="設定" />
+<menuoptions en="Messages" jp="メッセージ" />
+<menuoptions en="Logout" jp="ログアウト" />
+
+<menu en="Dashboard" jp="日付・ファイル登録" />
+<menu en="Graphs" jp="計算（Screening）" />
+
+<label en="Search by Net percentage change(%)" jp="乖離率" />
+<label en="Look up by Scrip Name" jp="該当する銘柄" />
+<Label en="Charts" jp="チャート" />
+<label en="Enter the date:" jp="日付" />
+<label en="Scrip List" jp="銘柄一覧" />
+<label en="Select File" jp="ファイル選択" />
+
+<periods>
+	<option en="5" jp="5日平均" />
+	<option en="25" jp="25日平均" />
+	<option en="75" jp="75日平均" />
+	<option en="150" jp="150日平均" />
+	<option en="200" jp="200日平均" />
+</periods>
+
+<button en="Search" jp="検索" />
+<button en="View" jp="表示" />
+<button en="Upload" jp="日付・ファイル登録" />
+
+<footer en="© 2015 Chart FTP. Powered by ING." jp="© 2015" />
