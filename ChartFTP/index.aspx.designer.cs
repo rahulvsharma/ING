@@ -112,6 +112,15 @@ namespace ChartFTP {
         protected global::System.Web.UI.WebControls.Button btnSearch;
         
         /// <summary>
+        /// dvleftColumn control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl dvleftColumn;
+        
+        /// <summary>
         /// Div1 control.
         /// </summary>
         /// <remarks>
@@ -148,6 +157,24 @@ namespace ChartFTP {
         protected global::System.Web.UI.WebControls.DropDownList ddlFilter;
         
         /// <summary>
+        /// txtRSI control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtRSI;
+        
+        /// <summary>
+        /// ddlRSIFilter control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlRSIFilter;
+        
+        /// <summary>
         /// btnGetReport control.
         /// </summary>
         /// <remarks>
@@ -173,6 +200,87 @@ namespace ChartFTP {
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.GridView dgMW;
+        
+        /// <summary>
+        /// txtMarketName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtMarketName;
+        
+        /// <summary>
+        /// btnSubmitMarketMaster control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubmitMarketMaster;
+        
+        /// <summary>
+        /// lblMarketMaster control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblMarketMaster;
+        
+        /// <summary>
+        /// txtStockCode control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStockCode;
+        
+        /// <summary>
+        /// txtStockName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStockName;
+        
+        /// <summary>
+        /// txtStockType control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtStockType;
+        
+        /// <summary>
+        /// ddlMarketName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlMarketName;
+        
+        /// <summary>
+        /// btnSubmitStockMaster control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Button btnSubmitStockMaster;
+        
+        /// <summary>
+        /// lblStockMaster control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl lblStockMaster;
         
         /// <summary>
         /// hidTAB control.

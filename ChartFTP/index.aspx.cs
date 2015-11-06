@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Threading;
+using System.ComponentModel; 
 
 namespace ChartFTP
 {
@@ -16,8 +18,6 @@ namespace ChartFTP
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            //GetReports();
-
             if (!this.IsPostBack)
             {
                 cbPeriods.Items.Insert(0, new ListItem("200日平均"));
@@ -25,8 +25,16 @@ namespace ChartFTP
                 cbPeriods.Items.Insert(0, new ListItem("75日平均"));
                 cbPeriods.Items.Insert(0, new ListItem("25日平均"));
                 cbPeriods.Items.Insert(0, new ListItem("5日平均"));
-            }
 
+                //dvleftColumn.Visible = false;
+                //dvrightColumn.Visible = false;
+
+                //ClientScript.RegisterStartupScript(this.GetType(), "fun", "ReportStatus();", true);
+
+                GetReports();
+
+                GetMarketMaster();
+            }
         }
 
         public static int period1D = 0;
@@ -35,6 +43,9 @@ namespace ChartFTP
         public static int period75D = 0;
         public static int period150D = 0;
         public static int period200D = 0;
+
+        public BackgroundWorker bwProcess = null;
+
         public static string chartData = string.Empty;
         public static string chartData5D = string.Empty;
         public static string chartData25D = string.Empty;
@@ -46,6 +57,7 @@ namespace ChartFTP
         private const string ASCENDING = " ASC";
         private const string DESCENDING = " DESC";
         public Image sortImage = new Image();
+
         public SortDirection GridViewSortDirection
         {
             get
@@ -57,6 +69,7 @@ namespace ChartFTP
             }
             set { ViewState["sortDirection"] = value; }
         }
+
         protected void btnScripList_Click(object sender, EventArgs e)
         {
             try
@@ -123,7 +136,7 @@ namespace ChartFTP
                     dgScripList.DataBind();
 
                     conn.Close();
-
+                    //dvleftColumn.Visible = true;
                 }
                 else
                     ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('乖離率平均の値を2つ以上を選択してください。')", true);
@@ -168,10 +181,23 @@ namespace ChartFTP
                             if (!string.IsNullOrEmpty(rows[j]))
                             {
                                 dt.Rows.Add();
-                                //int i = 0;
-                                var cells = rows[j].Split(',');
-                                cells[8] = myDateField.Value;
-                                var cellLength = cells.Length - 1;
+                                
+                                List<string> cells = new List<string>();
+                                cells = rows[j].Split(',').ToList();
+                                var cellLength = 0;
+
+                                if (cells.Count == 8)
+                                {
+                                    cells.Add(myDateField.Value);
+                                    cellLength = cells.Count;
+                                }
+                                else
+                                {
+                                    cells[8] = myDateField.Value;
+                                    cellLength = cells.Count - 1;
+                                }
+                                
+                                
                                 for (int i = 0; i < cellLength; i++)
                                 {
                                     if (!String.IsNullOrEmpty(cells[i]))
@@ -184,11 +210,11 @@ namespace ChartFTP
                         MySqlCommand cmd = null;
 
                         conn.Open();
-                        foreach (DataRow row in dt.Rows)
-                        {
-                            try
-                            {
 
+                        try
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
                                 //Console.WriteLine("Connecting to MySQL...");
                                 cmd = new MySqlCommand();
 
@@ -197,39 +223,113 @@ namespace ChartFTP
                                 cmd.CommandText = "SPInsertStockTransaction";
                                 cmd.CommandType = CommandType.StoredProcedure;
 
-                                cmd.Parameters.AddWithValue("i_MarketCode", row[0]);
-                                cmd.Parameters["i_MarketCode"].Direction = ParameterDirection.Input;
-                                cmd.Parameters["i_MarketCode"].MySqlDbType = MySqlDbType.VarChar;
+                                if (!String.IsNullOrEmpty(row[0].ToString()) && !String.IsNullOrEmpty(row[1].ToString()))
+                                {
 
-                                cmd.Parameters.AddWithValue("i_StockCode", row[1]);
-                                cmd.Parameters["i_StockCode"].MySqlDbType = MySqlDbType.VarChar;
-                                cmd.Parameters["i_StockCode"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters.AddWithValue("i_MarketCode", row[0]);
+                                    cmd.Parameters["i_MarketCode"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters["i_MarketCode"].MySqlDbType = MySqlDbType.VarChar;
 
-                                cmd.Parameters.AddWithValue("i_PriceDate", DateTime.Parse(row[8].ToString()).ToString("yyyy-MM-dd"));
-                                cmd.Parameters["i_PriceDate"].MySqlDbType = MySqlDbType.Date;
-                                cmd.Parameters["i_PriceDate"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters.AddWithValue("i_StockCode", row[1]);
+                                    cmd.Parameters["i_StockCode"].MySqlDbType = MySqlDbType.VarChar;
+                                    cmd.Parameters["i_StockCode"].Direction = ParameterDirection.Input;
 
-                                cmd.Parameters.AddWithValue("i_PriceOpen", (row[3]));
-                                cmd.Parameters["i_PriceOpen"].MySqlDbType = MySqlDbType.Decimal;
-                                cmd.Parameters["i_PriceOpen"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters.AddWithValue("i_PriceDate", DateTime.Parse(row[8].ToString()).ToString("yyyy-MM-dd"));
+                                    cmd.Parameters["i_PriceDate"].MySqlDbType = MySqlDbType.Date;
+                                    cmd.Parameters["i_PriceDate"].Direction = ParameterDirection.Input;
 
-                                cmd.Parameters.AddWithValue("i_PriceHigh", (row[4]));
-                                cmd.Parameters["i_PriceHigh"].MySqlDbType = MySqlDbType.Decimal;
-                                cmd.Parameters["i_PriceHigh"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters.AddWithValue("i_PriceOpen", (row[3]));
+                                    cmd.Parameters["i_PriceOpen"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceOpen"].Direction = ParameterDirection.Input;
 
-                                cmd.Parameters.AddWithValue("i_PriceLow", (row[5]));
-                                cmd.Parameters["i_PriceLow"].MySqlDbType = MySqlDbType.Decimal;
-                                cmd.Parameters["i_PriceLow"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters.AddWithValue("i_PriceHigh", (row[4]));
+                                    cmd.Parameters["i_PriceHigh"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceHigh"].Direction = ParameterDirection.Input;
 
-                                cmd.Parameters.AddWithValue("i_PriceClose", (row[6]));
-                                cmd.Parameters["i_PriceClose"].MySqlDbType = MySqlDbType.Decimal;
-                                cmd.Parameters["i_PriceClose"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters.AddWithValue("i_PriceLow", (row[5]));
+                                    cmd.Parameters["i_PriceLow"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceLow"].Direction = ParameterDirection.Input;
 
-                                cmd.Parameters.AddWithValue("i_PriceVolumn", (row[7]));
-                                cmd.Parameters["i_PriceVolumn"].MySqlDbType = MySqlDbType.Decimal;
-                                cmd.Parameters["i_PriceVolumn"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters.AddWithValue("i_PriceClose", (row[6]));
+                                    cmd.Parameters["i_PriceClose"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceClose"].Direction = ParameterDirection.Input;
 
-                                //Add the output parameter to the command object
+                                    cmd.Parameters.AddWithValue("i_PriceVolumn", (row[7]));
+                                    cmd.Parameters["i_PriceVolumn"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceVolumn"].Direction = ParameterDirection.Input;
+
+                                    //Add the output parameter to the command object
+
+                                    cmd.Parameters.Add(new MySqlParameter("o_Flag", MySqlDbType.String));
+                                    cmd.Parameters["o_Flag"].Direction = ParameterDirection.Output;
+
+                                    cmd.Parameters.Add(new MySqlParameter("o_ErrorCode", MySqlDbType.String));
+                                    cmd.Parameters["o_ErrorCode"].Direction = ParameterDirection.Output;
+
+                                    cmd.Parameters.Add(new MySqlParameter("o_ErrorDescription", MySqlDbType.String));
+                                    cmd.Parameters["o_ErrorDescription"].Direction = ParameterDirection.Output;
+                                    cmd.ExecuteNonQuery();
+
+                                   
+                                }
+                                else
+                                {
+
+                                }
+
+                            }
+
+                            try
+                            {
+                                // MySqlCommand cmd = null;
+                                cmd = new MySqlCommand();
+                                cmd.Connection = conn;
+                                cmd.CommandText = "UpdateConfigurationTable";
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (MySql.Data.MySqlClient.MySqlException exi)
+                            {
+                                conn.Close();
+
+                            }
+                            //cmd.Dispose();
+                            conn.Close();
+                            errorMsg.InnerText = "ファイルをアップロードしました。";
+                        }
+                        catch (MySql.Data.MySqlClient.MySqlException ex)
+                        {
+                            if (ex.Message == "Market Code does not exists")
+                            {
+                                errorMsg.InnerText = "市場名が存在しません。";
+                            }
+                            else if (ex.Message == "Stock Code does not exists")
+                            {
+                                errorMsg.InnerText = "銘柄コードが存在しません。";
+                            }
+                            else if (ex.Message == "Column 'MarketCode' cannot be null")
+                            {
+                                errorMsg.InnerText = "未登録の市場が見つかりました。ファイルアップロードができません。";
+                            }
+                            else
+                                errorMsg.InnerText = "エラーが発生しました。";// ex.Message;
+                            //conn.Close();
+                            //break;
+
+                            //errorMsg.InnerText = "ファイルアップロードを成功しました。";
+
+                            try
+                            {
+                                // MySqlCommand cmd = null;
+                                cmd = new MySqlCommand();
+                                cmd.Connection = conn;
+                                cmd.CommandText = "SPDeleteStockTransaction";
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                cmd.Parameters.AddWithValue("i_Pricedate", DateTime.Parse(myDateField.Value).ToString("yyyy-MM-dd"));
+                                cmd.Parameters["i_Pricedate"].Direction = ParameterDirection.Input;
+                                cmd.Parameters["i_Pricedate"].MySqlDbType = MySqlDbType.VarChar;
 
                                 cmd.Parameters.Add(new MySqlParameter("o_Flag", MySqlDbType.String));
                                 cmd.Parameters["o_Flag"].Direction = ParameterDirection.Output;
@@ -239,19 +339,16 @@ namespace ChartFTP
 
                                 cmd.Parameters.Add(new MySqlParameter("o_ErrorDescription", MySqlDbType.String));
                                 cmd.Parameters["o_ErrorDescription"].Direction = ParameterDirection.Output;
-                                cmd.ExecuteNonQuery();
-                            }
-                            catch (MySql.Data.MySqlClient.MySqlException ex)
-                            {
-                                errorMsg.InnerText = ex.Message;
-                                conn.Close();
-                                break;
-                            }
-                            errorMsg.InnerText = "ファイルアップロードを成功しました。";
 
+                                cmd.ExecuteNonQuery();
+                                conn.Close();
+                            }
+                            catch (MySql.Data.MySqlClient.MySqlException exi)
+                            {
+                                conn.Close();
+                            }
                         }
-                        //cmd.Dispose();
-                        conn.Close();
+
                     }
                     else
                     {
@@ -269,10 +366,11 @@ namespace ChartFTP
             }
 
         }
+
         public static string GetConnectionString()
         {
             string connStr = String.Format("server={0};user id={1}; password={2};" +
-              "database=ing; pooling=false", "localhost",
+              "database=ing; pooling=false;", "localhost",
               "root", "root");
 
             return connStr;
@@ -285,9 +383,9 @@ namespace ChartFTP
             if (fileLines.Count() < 2) { }
             //fail - no data row.
             var isValid = true;
-            isValid = ValidateColumnHeaders(fileLines[1]);
+            //isValid = ValidateColumnHeaders(fileLines[1]);
 
-            isValid = ValidateRows(fileLines.Skip(3));
+            //isValid = ValidateRows(fileLines.Skip(3));
 
             return isValid;
         }
@@ -328,6 +426,9 @@ namespace ChartFTP
 
         public void GetReports()
         {
+            int limiter = 0;
+            limiter = Convert.ToInt32(ddlRSIFilter.SelectedValue);
+
             MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
             try
             {
@@ -337,15 +438,52 @@ namespace ChartFTP
                 cmd.Connection = conn;
                 cmd.CommandText = "SPGetResultSet";
                 cmd.CommandType = CommandType.StoredProcedure;
+                
                 cmd.Parameters.AddWithValue("i_Symbol", ddlFilter.SelectedValue);
                 cmd.Parameters["i_Symbol"].Direction = ParameterDirection.Input;
                 cmd.Parameters["i_Symbol"].MySqlDbType = MySqlDbType.VarChar;
+
+                cmd.Parameters.AddWithValue("i_RSI14", txtRSI.Text);
+                cmd.Parameters["i_RSI14"].Direction = ParameterDirection.Input;
+                cmd.Parameters["i_RSI14"].MySqlDbType = MySqlDbType.VarChar;
+
+                cmd.Parameters.AddWithValue("i_RSI14_LimitFlag", limiter);
+                cmd.Parameters["i_RSI14_LimitFlag"].Direction = ParameterDirection.Input;
+                cmd.Parameters["i_RSI14_LimitFlag"].MySqlDbType = MySqlDbType.Int32;
+                
                 MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adp.Fill(ds);
                 dtReport = ds.Tables[0];
                 dgMW.DataSource = ds.Tables[0];
                 dgMW.DataBind();
+                conn.Close();
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                conn.Close();
+            }
+        }
+
+        public void GetMarketMaster()
+        {
+            MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+            try
+            {
+                MySqlCommand cmd = null;
+                conn.Open();
+                cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SPGetMarketMaster";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                DataSet ds = new DataSet();
+                adp.Fill(ds);
+
+                ddlMarketName.DataSource = ds.Tables[0];
+                ddlMarketName.DataTextField = "MarketName";
+                ddlMarketName.DataBind();
                 conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -398,6 +536,7 @@ namespace ChartFTP
             var marketCode = dgScripList.DataKeys[gvrow.RowIndex].Values[0];
             var stockCode = dgScripList.DataKeys[gvrow.RowIndex].Values[1];
             var period = 20;
+            
             MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
             try
             {
@@ -438,6 +577,7 @@ namespace ChartFTP
                 adp.Fill(ds);
                 conn.Close();
 
+                
                 //var data1 = JSON_DataTable(ds.Tables[0]);
                 var data2 = CreateJsonParameters(ds.Tables[0]);
                 if (data2 != null)
@@ -499,6 +639,59 @@ namespace ChartFTP
         public static string GetChartVolData()
         {
             return chartDataVol;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static int CheckReportStatus()
+        {
+            int i = 0;
+            MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+            try
+            {
+                MySqlCommand cmd = null;
+                conn.Open();
+                cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SPGetConfiguration";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.Add(new MySqlParameter("o_Flag", MySqlDbType.String));
+                cmd.Parameters["o_Flag"].Direction = ParameterDirection.Output;
+
+                i = cmd.ExecuteNonQuery();
+                conn.Close();
+                
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                conn.Close();
+            }
+            return i;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static int GenerateReportStatus()
+        {
+            int i = 0;
+            MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+            try
+            {
+                MySqlCommand cmd = null;
+                conn.Open();
+                cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SPGetResultParent";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                i = cmd.ExecuteNonQuery();
+                conn.Close();
+
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                conn.Close();
+            }
+            return i;
         }
         #endregion
 
@@ -868,6 +1061,7 @@ namespace ChartFTP
                 dgScripList.DataBind();
 
                 conn.Close();
+                //dvleftColumn.Visible = true;
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
@@ -943,6 +1137,186 @@ namespace ChartFTP
         protected void btnGetReport_Click(object sender, EventArgs e)
         {
             GetReports();
+        }
+
+        protected void txtRSI_TextChanged(object sender, EventArgs e)
+        {
+           
+        }
+
+        protected void btnSubmitStockMaster_Click(object sender, EventArgs e)
+        {
+            if (txtStockCode.Text.Length > 0)
+            {
+                if (txtStockName.Text.Length > 0)
+                {
+                    //if (txtStockType.Text.Length > 0)
+                    //{
+                        MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+                        try
+                        {
+                            MySqlCommand cmd = null;
+                            conn.Open();
+                            cmd = new MySqlCommand();
+                            cmd.Connection = conn;
+                            cmd.CommandText = "SPInsertStockMaster";
+                            cmd.CommandType = CommandType.StoredProcedure;
+
+                            cmd.Parameters.AddWithValue("i_StockCode", txtStockCode.Text);
+                            cmd.Parameters["i_StockCode"].Direction = ParameterDirection.Input;
+                            cmd.Parameters["i_StockCode"].MySqlDbType = MySqlDbType.VarChar;
+
+                            cmd.Parameters.AddWithValue("i_StockName", txtStockName.Text);
+                            cmd.Parameters["i_StockName"].Direction = ParameterDirection.Input;
+                            cmd.Parameters["i_StockName"].MySqlDbType = MySqlDbType.VarChar;
+
+                            cmd.Parameters.AddWithValue("i_StockType", txtStockType.Text);
+                            cmd.Parameters["i_StockType"].Direction = ParameterDirection.Input;
+                            cmd.Parameters["i_StockType"].MySqlDbType = MySqlDbType.VarChar;
+
+                            cmd.Parameters.AddWithValue("i_MarketName", ddlMarketName.SelectedItem.Text);
+                            cmd.Parameters["i_MarketName"].Direction = ParameterDirection.Input;
+                            cmd.Parameters["i_MarketName"].MySqlDbType = MySqlDbType.VarChar;
+
+                            cmd.Parameters.Add(new MySqlParameter("o_Flag", MySqlDbType.String));
+                            cmd.Parameters["o_Flag"].Direction = ParameterDirection.Output;
+
+                            cmd.Parameters.Add(new MySqlParameter("o_ErrorCode", MySqlDbType.String));
+                            cmd.Parameters["o_ErrorCode"].Direction = ParameterDirection.Output;
+
+                            cmd.Parameters.Add(new MySqlParameter("o_ErrorDescription", MySqlDbType.String));
+                            cmd.Parameters["o_ErrorDescription"].Direction = ParameterDirection.Output;
+
+                            cmd.ExecuteNonQuery();
+                            conn.Close();
+                            lblStockMaster.InnerText = "銘柄を登録しました。";
+
+                            txtStockCode.Text = "";
+                            txtStockName.Text = "";
+                            txtStockType.Text = "";
+                            ddlMarketName.SelectedIndex = 1;
+                        }
+                        catch (MySql.Data.MySqlClient.MySqlException ex)
+                        {
+                            conn.Close();
+                            if (ex.Message == "Stock Code exists")
+                            {
+                                lblStockMaster.InnerText = "銘柄が既に存在しています。";
+                            }
+                            else if (ex.Message == "Market Code is blank")
+                            {
+                                lblStockMaster.InnerText = " 市場名を入力してください。";
+                            }
+                            else
+                                lblStockMaster.InnerText = ex.Message;
+                        }
+                    //}
+                    //else
+                    //{
+                     //   lblStockMaster.InnerText = "Stock type cannot be blank";
+                    //}
+                }
+                else
+                {
+                    lblStockMaster.InnerText = "銘柄名を入力してください。";
+                }
+            }
+            else
+            {
+                lblStockMaster.InnerText = "銘柄コードを入力してください。";
+            }
+        }
+
+        protected void btnSubmitMarketMaster_Click(object sender, EventArgs e)
+        {
+            if (txtMarketName.Text.Length > 0)
+            {
+                MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+                try
+                {
+                    MySqlCommand cmd = null;
+                    conn.Open();
+                    cmd = new MySqlCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandText = "SPInsertMarketMaster";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("i_MarketName", txtMarketName.Text);
+                    cmd.Parameters["i_MarketName"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_MarketName"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.Add(new MySqlParameter("o_Flag", MySqlDbType.String));
+                    cmd.Parameters["o_Flag"].Direction = ParameterDirection.Output;
+
+                    cmd.Parameters.Add(new MySqlParameter("o_ErrorCode", MySqlDbType.String));
+                    cmd.Parameters["o_ErrorCode"].Direction = ParameterDirection.Output;
+
+                    cmd.Parameters.Add(new MySqlParameter("o_ErrorDescription", MySqlDbType.String));
+                    cmd.Parameters["o_ErrorDescription"].Direction = ParameterDirection.Output;
+
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    txtMarketName.Text = "";
+                    lblMarketMaster.InnerText = "市場名を登録しました。";
+
+                    GetMarketMaster();
+                }
+                catch (MySql.Data.MySqlClient.MySqlException ex)
+                {
+                    
+                    //Market Code is exists
+                    if (ex.Message == "Market Code exists")
+                    {
+                        lblMarketMaster.InnerText = "市場名が既に存在しています。";
+                    }
+                    else
+                        lblMarketMaster.InnerText = ex.Message;
+                }
+            }
+            else
+            {
+                lblMarketMaster.InnerText = "市場名を入力してください。";
+            }
+        }
+
+        protected void btnDelete_Click(object sender, EventArgs e)
+        {
+            MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+            try
+            {
+                MySqlCommand cmd = null;
+                conn.Open();
+                cmd = new MySqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = "SPDeleteStockTransaction";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                cmd.Parameters.AddWithValue("i_Pricedate", DateTime.Parse(myDateField.Value).ToString("yyyy-MM-dd"));
+                cmd.Parameters["i_Pricedate"].Direction = ParameterDirection.Input;
+                cmd.Parameters["i_Pricedate"].MySqlDbType = MySqlDbType.VarChar;
+
+                cmd.Parameters.Add(new MySqlParameter("o_Flag", MySqlDbType.String));
+                cmd.Parameters["o_Flag"].Direction = ParameterDirection.Output;
+
+                cmd.Parameters.Add(new MySqlParameter("o_ErrorCode", MySqlDbType.String));
+                cmd.Parameters["o_ErrorCode"].Direction = ParameterDirection.Output;
+
+                cmd.Parameters.Add(new MySqlParameter("o_ErrorDescription", MySqlDbType.String));
+                cmd.Parameters["o_ErrorDescription"].Direction = ParameterDirection.Output;
+
+                cmd.ExecuteNonQuery();
+                conn.Close();
+                errorMsg.InnerText = "Record deleted successfully";
+            }
+            catch (MySql.Data.MySqlClient.MySqlException ex)
+            {
+                conn.Close();
+            }
+        }
+
+        protected void btnGenerateReport_Click(object sender, EventArgs e)
+        {
+
         }
 
     }

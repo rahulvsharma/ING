@@ -35,6 +35,13 @@
 
         var chartDataList = [];
         var selectedRange = 0;
+
+        Highcharts.setOptions({
+            global: {
+                useUTC: false
+            }
+        });
+
         function Draw(data, vol, chartSeries) {
             // split the data set into ohlc and volume
             var ohlc = [],
@@ -101,6 +108,8 @@
                 }
 
             }
+
+           
 
             // create the chart
             $('#graph-bar').highcharts('StockChart', {
@@ -200,6 +209,25 @@
         var chartDataVolume = null;
         var count = 0;
 
+        function ReportStatus() {
+            PageMethods.CheckReportStatus(onSuccessStatus, onError);
+        }
+
+        function onSuccessStatus(result) {
+            if (result === 0)
+                $('#btnGenerateReport').prop('disabled', false);
+            else
+                $('#btnGenerateReport').prop('disabled', true);
+        }
+
+        function GenerateReport() {
+            PageMethods.GenerateReportStatus(onReportSucceed, onError);
+        }
+
+        function onReportSucceed(result) {
+            alert('Report generated');
+        }
+
         function fun() {
             count = 0;
             PageMethods.GetChartData(onSucceed, onError);
@@ -248,7 +276,7 @@
         }
 
         function onError(result) {
-            alert(result);
+            console.log(result);
         }
 
         function checkCountAndDraw(chkCount) {
@@ -270,20 +298,25 @@
                         <li id="tabHeader_1">日付・ファイル登録</li>
                         <li id="tabHeader_2">計算</li>
                         <li id="tabHeader_3">SCReening</li>
+                        <li id="tabHeader_4">市場・銘柄登録</li>
                     </ul>
                 </div>
                 <div id="tabscontent">
                     <div class="tabpage" id="tabpage_1">
                         <h2></h2>
 
-                        <b class="marginRight">日付:</b>
+                        <b style="margin-left: 45px;" class="marginRight">日付:</b>
                         <asp:TextBox runat="server" ID="datePicker" CssClass="dtPicker" ViewStateMode="Enabled" OnTextChanged="datePicker_TextChanged" />
                         <asp:HiddenField ID="myDateField" runat="server" />
-
-                        <label class="control-label marginRight"><b>ファイル選択: </b></label>
-                        <asp:FileUpload ID="FileUpload1" runat="server" CssClass="custom-file-input Cntrl1" />
-                        <asp:Button Text="日付・ファイル登録" ID="upload" OnClick="Upload" runat="server" class="btn" />
-                        <span runat="server" id="errorMsg"></span>
+                        <div style="margin-top: 20px;">
+                            <label class="control-label marginRight"><b>ファイル選択: </b></label>
+                            <asp:FileUpload ID="FileUpload1" runat="server" CssClass="custom-file-input Cntrl1" />
+                            <br />
+                            <asp:Button Text="日付・ファイル登録" style="margin-left: 80px;margin-top: 20px;" ID="upload" OnClick="Upload" runat="server" class="btn" />
+                            <%--<asp:Button Text="削除" style="margin-left: 10px;margin-top: 20px;" ID="btnDelete" OnClick="btnDelete_Click" runat="server" class="btn" />--%>
+                            <br />
+                            <span runat="server" id="errorMsg"></span>
+                        </div>
 
                     </div>
 
@@ -307,7 +340,7 @@
                             </div>
                             <div class="columnsContainer">
 
-                                <div class="leftColumn">
+                                <div class="leftColumn" id="dvleftColumn" runat="server">
                                     <h2 style="margin-left: -13px;">銘柄一覧</h2>
                                     <div id="scrip-list" style="margin-left: -13px;">
                                         <div id="Div1" runat="server" style="border-right: 1px solid grey;">
@@ -333,9 +366,7 @@
                                     </div>
                                 </div>
 
-                                <div class="rightColumn">
-
-
+                                <div class="rightColumn" >
                                     <div class="main-box">
 
                                         <div style="float: left">
@@ -360,14 +391,25 @@
                         <h2>SCReening</h2>
                         <div id="scrip-list1" style="height: 420px; padding: 0px; position: relative;">
                             <div id="panel_placeholder" >
-                                <span>Filter:</span>
+                                <span>記号:</span>
                                 <asp:DropDownList ID="ddlFilter" runat="server">
-                                    <asp:ListItem>All</asp:ListItem>
+                                    <asp:ListItem>全て</asp:ListItem>
                                     <asp:ListItem>△</asp:ListItem>
                                     <asp:ListItem>◎</asp:ListItem>
                                     <asp:ListItem>空白</asp:ListItem>
                                 </asp:DropDownList>
-                                <asp:Button ID="btnGetReport" runat="server" OnClick="btnGetReport_Click" Text="Fetch Report" />
+
+                                <span style="margin-left:20px;">RSI(14):</span>
+                                <asp:TextBox ID="txtRSI" Width="50" OnTextChanged="txtRSI_TextChanged" runat="server" />
+
+                                <asp:DropDownList ID="ddlRSIFilter" runat="server">
+                                    <asp:ListItem Value="0">全て</asp:ListItem>
+                                    <asp:ListItem Value="1">以上</asp:ListItem>
+                                    <asp:ListItem Value="2">以下</asp:ListItem>
+                                </asp:DropDownList>
+
+                                <asp:Button ID="btnGetReport" runat="server" OnClick="btnGetReport_Click" Text="検索" />
+                                <%--<asp:Button ID="btnGenerateReport" runat="server" OnClick="btnGenerateReport_Click" Text="Resultテーブル生成" />--%>
                             </div>
                             <div id="placeholder123" style="overflow: overlay;" runat="server">
 
@@ -382,6 +424,43 @@
                                 <%--<div id="jsGrid"></div>--%>
 
                             </div>
+                        </div>
+                    </div>
+
+                    <div class="tabpage" id="tabpage_4">
+                        <div id="dvMarketMaster">
+                            <span><b>市場情報入力:</b></span>
+                            <br /><br />
+                            <span style="margin-left:20px;">市場名:</span>
+                            <asp:TextBox runat="server" Width="150" ID="txtMarketName" />
+                            <br /><br />
+                            <asp:Button style="margin-left:66px;" Width="150" Text="市場登録" ID="btnSubmitMarketMaster" OnClick="btnSubmitMarketMaster_Click" runat="server" />
+                            <br /><br />
+                            <span runat="server" ID="lblMarketMaster" />
+                            <br /><br />
+                            <br /><br />
+                        </div>
+                        <br />
+                        <div id="dvStockMaster">
+                            <span><b>銘柄情報入力:</b></span>
+                            <br /><br />
+                            <span>銘柄コード:</span>
+                            <asp:TextBox Width="150" ID="txtStockCode" runat="server" />
+                            <br /><br />
+                            <span style="margin-left:19px;">銘柄名:</span>
+                            <asp:TextBox Width="150" ID="txtStockName" runat="server" />
+                            <br /><br />
+                            <span>銘柄タイプ:</span>
+                            <asp:TextBox Width="150" ID="txtStockType" runat="server" />
+                            <br /><br />
+                            <span style="margin-left:19px;">市場名:</span>
+                            <asp:DropDownList Width="150" ID="ddlMarketName" runat="server" />
+                            <br /><br />
+                            <asp:Button style="margin-left:66px;" Width="150" Text="銘柄登録" ID="btnSubmitStockMaster" OnClick="btnSubmitStockMaster_Click" runat="server" />
+                            <br /><br />
+                            <span runat="server" ID="lblStockMaster" />
+                            <br /><br />
+                            <br /><br />
                         </div>
                     </div>
                 </div>
@@ -491,72 +570,12 @@
                         Draw(chartData, chartDataVolume, []);
                 });
 
-               
+                $('#btnGenerateReport').click(function () {
+                    GenerateReport();
+                    return;
+                });
 
-                //GetReports();
             });
-
-            //function LoadReport(reportData) {
-            //    debugger;
-            //    $("#jsGrid").jsGrid({
-            //        height: "500",
-            //        width: "100%",
-
-            //        //filtering: true,
-            //        //editing: true,
-            //        sorting: true,
-            //        paging: true,
-            //        autoload: true,
-
-            //        pageIndex: 1,
-            //        pageSize: 20,
-            //        pageButtonCount: 15,
-            //        pagerFormat: "Pages: {first} {prev} {pages} {next} {last}    {pageIndex} of {pageCount}",
-            //        pagePrevText: "Prev",
-            //        pageNextText: "Next",
-            //        pageFirstText: "First",
-            //        pageLastText: "Last",
-            //        pageNavigatorNextText: "...",
-            //        pageNavigatorPrevText: "...",
-
-            //        loadIndication: true,
-            //        loadIndicationDelay: 500,
-            //        loadMessage: "Please, wait...",
-            //        loadShading: true,
-
-            //        updateOnResize: true,
-            //        //controller: {
-            //        //    loadData: function () {
-            //        //        return data;
-            //        //    }
-            //        //},
-            //        //url: 'index.aspx/GetReports',
-
-            //        data:reportData,
-
-            //        fields: [
-            //            { name: "銘柄コード", type: "number", width: 70 },
-            //            { name: "市場名", type: "text", width: 100 },
-            //            { name: "調整後終値", type: "number", width: 100 },
-            //            { name: "値幅", type: "number", width: 100 },
-            //            { name: "上回り期間", type: "number", width: 100 },
-            //            { name: "深さ 乖離率", type: "number", width: 100 },
-            //            { name: "5SMA Volume", type: "number", width: 100 },
-            //            { name: "Critical Price", type: "number", width: 100 },
-            //            { name: "Range Low", type: "number", width: 100 },
-            //            { name: "Range High", type: "number", width: 100 },
-            //            { name: "Term", type: "number", width: 100 },
-            //            { name: "Below Re-term", type: "number", width: 100 },
-            //            { name: "レンジ＋150日", type: "number", width: 100 },
-            //            { name: "記号", type: "number", width: 100 },
-            //            { name: "RSI(14)", type: "number", width: 100 },
-            //            { name: "25 SMA", type: "number", width: 100 },
-            //            { name: "VR(25)", type: "number", width: 100 }//,
-            //            //{ name: "Country", type: "select", items: db.countries, valueField: "Id", textField: "Name" },
-            //            //{ name: "Married", type: "checkbox", title: "Is Married" }
-            //        ]
-            //    });
-            //}
 
             function onReportError() {
                 alert();
@@ -573,6 +592,7 @@
                 document.getElementById("tabpage_" + 1).style.display = "none";
                 document.getElementById("tabpage_" + 2).style.display = "none";
                 document.getElementById("tabpage_" + 3).style.display = "none";
+                document.getElementById("tabpage_" + 4).style.display = "none";
 
                 var ident = navitem.id.split("_")[1];
                 //add class of activetabheader to new active tab and show contents
@@ -582,8 +602,7 @@
                 document.getElementById('<%=hidTAB.ClientID %>').value = document.getElementsByClassName("tabActiveHeader")[0].id;
             }
         </script>
-        <script src="tabs_old.js"></script>
-
+       
     </div>
 
 </body>

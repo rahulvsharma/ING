@@ -1,8 +1,0 @@
-C:\ING\ChartFTP\ChartFTP\bin\ChartFTP.dll.config
-C:\ING\ChartFTP\ChartFTP\bin\ChartFTP.dll
-C:\ING\ChartFTP\ChartFTP\bin\ChartFTP.pdb
-C:\ING\ChartFTP\ChartFTP\bin\MySql.Data.Entity.EF6.dll
-C:\ING\ChartFTP\ChartFTP\bin\MySql.Fabric.Plugin.dll
-C:\ING\ChartFTP\ChartFTP\obj\Debug\ChartFTP.dll
-C:\ING\ChartFTP\ChartFTP\obj\Debug\ChartFTP.pdb
-C:\ING\ChartFTP\ChartFTP\obj\Debug\ChartFTP.csprojResolveAssemblyReference.cache
