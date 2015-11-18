@@ -236,7 +236,16 @@ body { margin: 0; }
     background-color: #fff; 
     width: 100%;
     margin: 5px 0 10px 0; border: solid 1px #525252; border-collapse:collapse; font-family:Calibri; color: #474747;}
+
+/*.Grid tbody tr{
+    color: Black; 
+    background-color: #DEDFDE;
+}*/
 .Grid td {
+      padding: 2px;
+      border: solid 1px #c1c1c1; }
+
+.Gridtd {
       padding: 2px;
       border: solid 1px #c1c1c1; }
 .Grid th  {
@@ -246,6 +255,15 @@ body { margin: 0; }
       background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#0C91EC), color-stop(100%,#257AB6));
       border-left: solid 1px #525252;
       font-size: 0.9em; }
+
+.Gridth  {
+      padding : 4px 2px;
+      color: #fff;
+      /*background: #257AB6 repeat-x top;*/
+      background:-webkit-gradient(linear, left top, left bottom, color-stop(0%,#0C91EC), color-stop(100%,#257AB6));
+      border-left: solid 1px #525252;
+      font-size: 0.9em; }
+
 .Grid .alt {
       background: #fcfcfc repeat-x top; }
 .Grid .pgr {background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#0C91EC), color-stop(100%,#257AB6)); }

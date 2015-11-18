@@ -10,7 +10,8 @@ using System.Web.Services;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Threading;
-using System.ComponentModel; 
+using System.ComponentModel;
+using System.Drawing; 
 
 namespace ChartFTP
 {
@@ -32,8 +33,17 @@ namespace ChartFTP
                 //ClientScript.RegisterStartupScript(this.GetType(), "fun", "ReportStatus();", true);
 
                 GetReports();
-
+                GetParameter();
                 GetMarketMaster();
+
+                spRSI.Visible = false;
+                sp25SMA.Visible = false;
+                spVR25.Visible = false;
+                spPriceRange.Visible = false;
+                txtRSIUpper.Visible = false;
+                txtVR25Upper.Visible = false;
+                txtPriceRangeUpper.Visible = false;
+                txt25SMAUpper.Visible = false;
             }
         }
 
@@ -54,9 +64,13 @@ namespace ChartFTP
         public static string chartData200D = string.Empty;
         public static string chartDataVol = string.Empty;
         public static DataTable dtReport = null;
+        public static DataTable dtParametersK2C = null;
+        public static DataTable dtParametersW2D = null;
+        public static DataTable dtParametersP = null;
+        public static DataTable dtParameters = null;
         private const string ASCENDING = " ASC";
         private const string DESCENDING = " DESC";
-        public Image sortImage = new Image();
+        public System.Web.UI.WebControls.Image sortImage = new System.Web.UI.WebControls.Image();
 
         public SortDirection GridViewSortDirection
         {
@@ -426,9 +440,175 @@ namespace ChartFTP
 
         public void GetReports()
         {
-            int limiter = 0;
-            limiter = Convert.ToInt32(ddlRSIFilter.SelectedValue);
+            int RSILimiter = 0, PriceRangeLimiter = 0, SMALimiter = 0, VR25Limiter = 0;
+            bool isValid = true;
+            string errMsg = string.Empty;
 
+            PriceRangeLimiter = Convert.ToInt32(ddlPriceRange.SelectedValue);
+            if (PriceRangeLimiter == 3) 
+            {
+                var low = Convert.ToDecimal(txtPriceRangeLower.Text);
+                var high = Convert.ToDecimal(txtPriceRangeUpper.Text);
+                if (low > high)
+                {
+                    errMsg = "値幅の値を正しく入力してください。";
+                    isValid = false;
+                }
+            }
+
+            SMALimiter = Convert.ToInt32(ddl25SMAFilter.SelectedValue);
+            if (SMALimiter == 3)
+            {
+                var low = Convert.ToDecimal(txt25SMALower.Text);
+                var high = Convert.ToDecimal(txt25SMAUpper.Text);
+                if (low > high)
+                {
+                    errMsg = "25 SMAの値を正しく入力してください。";
+                    isValid = false;
+                }
+            }
+            
+            VR25Limiter = Convert.ToInt32(ddlVR25Filter.SelectedValue);
+            if (VR25Limiter == 3)
+            {
+                var low = Convert.ToDecimal(txtVR25Lower.Text);
+                var high = Convert.ToDecimal(txtVR25Upper.Text);
+                if (low > high)
+                {
+                    errMsg = "VR(25)の値を正しく入力してください。";
+                    isValid = false;
+                }
+            }
+
+            RSILimiter = Convert.ToInt32(ddlRSIFilter.SelectedValue);
+            if (RSILimiter == 3)
+            {
+                var low = Convert.ToDecimal(txtRSILower.Text);
+                var high = Convert.ToDecimal(txtRSIUpper.Text);
+                if (low > high)
+                {
+                    errMsg = "RSI(14)の値を正しく入力してください。";
+                    isValid = false;
+                }
+            }
+
+
+
+            if (isValid)
+            {
+                MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+                try
+                {
+                    MySqlCommand cmd = null;
+                    conn.Open();
+                    cmd = new MySqlCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandText = "SPGetResultSet";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("i_Symbol", ddlFilter.SelectedItem);
+                    cmd.Parameters["i_Symbol"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_Symbol"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_RSI14LowerLimit", txtRSILower.Text);
+                    cmd.Parameters["i_RSI14LowerLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_RSI14LowerLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_RSI14UpperLimit", txtRSIUpper.Text);
+                    cmd.Parameters["i_RSI14UpperLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_RSI14UpperLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_RSI14_LimitFlag", RSILimiter);
+                    cmd.Parameters["i_RSI14_LimitFlag"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_RSI14_LimitFlag"].MySqlDbType = MySqlDbType.Int32;
+
+                    cmd.Parameters.AddWithValue("i_25SMALowerLimit", txt25SMALower.Text);
+                    cmd.Parameters["i_25SMALowerLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_25SMALowerLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_25SMAUpperLimit", txt25SMAUpper.Text);
+                    cmd.Parameters["i_25SMAUpperLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_25SMAUpperLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_25SMA_LimitFlag", SMALimiter);
+                    cmd.Parameters["i_25SMA_LimitFlag"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_25SMA_LimitFlag"].MySqlDbType = MySqlDbType.Int32;
+
+                    cmd.Parameters.AddWithValue("i_PriceRangeLowerLimit", txtPriceRangeLower.Text);
+                    cmd.Parameters["i_PriceRangeLowerLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_PriceRangeLowerLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_PriceRangeUpperLimit", txtPriceRangeUpper.Text);
+                    cmd.Parameters["i_PriceRangeUpperLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_PriceRangeUpperLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_PriceRange_LimitFlag", PriceRangeLimiter);
+                    cmd.Parameters["i_PriceRange_LimitFlag"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_PriceRange_LimitFlag"].MySqlDbType = MySqlDbType.Int32;
+
+                    cmd.Parameters.AddWithValue("i_VR25LowerLimit", txtVR25Lower.Text);
+                    cmd.Parameters["i_VR25LowerLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_VR25LowerLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_VR25UpperLimit", txtVR25Upper.Text);
+                    cmd.Parameters["i_VR25UpperLimit"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_VR25UpperLimit"].MySqlDbType = MySqlDbType.VarChar;
+
+                    cmd.Parameters.AddWithValue("i_VR25_LimitFlag", VR25Limiter);
+                    cmd.Parameters["i_VR25_LimitFlag"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_VR25_LimitFlag"].MySqlDbType = MySqlDbType.Int32;
+
+                    MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
+                    DataSet ds = new DataSet();
+                    adp.Fill(ds);
+                    dtReport = ds.Tables[0];
+                    dgMW.DataSource = ds.Tables[0];
+                    dgMW.DataBind();
+                    conn.Close();
+                }
+                catch (MySql.Data.MySqlClient.MySqlException ex)
+                {
+                    conn.Close();
+                }
+            }
+            else
+            {
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('" + errMsg + "')", true);
+            }
+        }
+
+        public void ResetReportFilters() 
+        {
+            ddlFilter.SelectedIndex = 0;
+            ddlRSIFilter.SelectedIndex = 0;
+            ddlPriceRange.SelectedIndex = 0;
+            ddl25SMAFilter.SelectedIndex = 0;
+            ddlVR25Filter.SelectedIndex = 0;
+            txtRSILower.Text = string.Empty;
+            txtRSIUpper.Text = string.Empty;
+            txtRSIUpper.Visible = false;
+            spRSI.Visible = false;
+            txtPriceRangeLower.Text = string.Empty;
+            txtPriceRangeUpper.Text = string.Empty;
+            txtPriceRangeUpper.Visible = false;
+            spPriceRange.Visible = false;
+            txt25SMALower.Text = string.Empty;
+            txt25SMAUpper.Text = string.Empty;
+            txt25SMAUpper.Visible = false;
+            sp25SMA.Visible = false;
+            txtVR25Lower.Text = string.Empty;
+            txtVR25Upper.Text = string.Empty;
+            txtVR25Upper.Visible = false;
+            spVR25.Visible = false;
+        }
+
+        internal Dictionary<string, Decimal> GetDict(DataTable dt)
+        {
+            return dt.AsEnumerable().ToDictionary<DataRow, string, Decimal>(row => row.Field<string>(0), row => row.Field<Decimal>(1));
+        }
+
+        public void GetParameter() 
+        {
             MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
             try
             {
@@ -436,33 +616,38 @@ namespace ChartFTP
                 conn.Open();
                 cmd = new MySqlCommand();
                 cmd.Connection = conn;
-                cmd.CommandText = "SPGetResultSet";
+                cmd.CommandText = "SPGetParameter";
                 cmd.CommandType = CommandType.StoredProcedure;
-                
-                cmd.Parameters.AddWithValue("i_Symbol", ddlFilter.SelectedValue);
-                cmd.Parameters["i_Symbol"].Direction = ParameterDirection.Input;
-                cmd.Parameters["i_Symbol"].MySqlDbType = MySqlDbType.VarChar;
-
-                cmd.Parameters.AddWithValue("i_RSI14", txtRSI.Text);
-                cmd.Parameters["i_RSI14"].Direction = ParameterDirection.Input;
-                cmd.Parameters["i_RSI14"].MySqlDbType = MySqlDbType.VarChar;
-
-                cmd.Parameters.AddWithValue("i_RSI14_LimitFlag", limiter);
-                cmd.Parameters["i_RSI14_LimitFlag"].Direction = ParameterDirection.Input;
-                cmd.Parameters["i_RSI14_LimitFlag"].MySqlDbType = MySqlDbType.Int32;
                 
                 MySqlDataAdapter adp = new MySqlDataAdapter(cmd);
                 DataSet ds = new DataSet();
                 adp.Fill(ds);
-                dtReport = ds.Tables[0];
-                dgMW.DataSource = ds.Tables[0];
-                dgMW.DataBind();
+                dtParametersK2C = ds.Tables[0];
+                dtParametersW2D = ds.Tables[1];
+                dtParametersP = ds.Tables[2];
+
+                dtParameters = new DataTable();
+                dtParameters.TableName = "FreshTable";
+                dtParameters.Columns.Add("Name", typeof(string));
+                dtParameters.Columns.Add("Value", typeof(Decimal));
+
+                dtParameters.Merge(dtParametersK2C);
+                dtParameters.Merge(dtParametersW2D);
+                dtParameters.Merge(dtParametersP);
+
+                dgParameterK2C.DataSource = ds.Tables[0];
+                dgParameterW2D.DataSource = ds.Tables[1];
+                dgParameterP.DataSource = ds.Tables[2];
+                dgParameterK2C.DataBind();
+                dgParameterW2D.DataBind();
+                dgParameterP.DataBind();
                 conn.Close();
             }
             catch (MySql.Data.MySqlClient.MySqlException ex)
             {
                 conn.Close();
             }
+            
         }
 
         public void GetMarketMaster()
@@ -1084,8 +1269,7 @@ namespace ChartFTP
                 }
             }
 
-        }
-        
+        }    
 
         private void SortGridView(string sortExpression, string direction)
         {
@@ -1137,11 +1321,6 @@ namespace ChartFTP
         protected void btnGetReport_Click(object sender, EventArgs e)
         {
             GetReports();
-        }
-
-        protected void txtRSI_TextChanged(object sender, EventArgs e)
-        {
-           
         }
 
         protected void btnSubmitStockMaster_Click(object sender, EventArgs e)
@@ -1317,6 +1496,401 @@ namespace ChartFTP
         protected void btnGenerateReport_Click(object sender, EventArgs e)
         {
 
+        }
+
+        protected void ddlVR25Filter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (((System.Web.UI.WebControls.DropDownList)(sender)).SelectedIndex == 3)
+            {
+                spVR25.Visible = true;
+                txtVR25Upper.Visible = true;
+            }
+            else
+            {
+                spVR25.Visible = false;
+                txtVR25Upper.Visible = false;
+            }
+        }
+
+        protected void ddl25SMAFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (((System.Web.UI.WebControls.DropDownList)(sender)).SelectedIndex == 3)
+            {
+                sp25SMA.Visible = true;
+                txt25SMAUpper.Visible = true;
+            }
+            else
+            {
+                sp25SMA.Visible = false;
+                txt25SMAUpper.Visible = false;
+            }
+        }
+
+        protected void ddlPriceRange_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (((System.Web.UI.WebControls.DropDownList)(sender)).SelectedIndex == 3)
+            {
+                spPriceRange.Visible = true;
+                txtPriceRangeUpper.Visible = true;
+            }
+            else
+            {
+                spPriceRange.Visible = false;
+                txtPriceRangeUpper.Visible = false;
+            }
+        }
+
+        protected void ddlRSIFilter_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (((System.Web.UI.WebControls.DropDownList)(sender)).SelectedIndex == 3)
+            {
+                spRSI.Visible = true;
+                txtRSIUpper.Visible = true;
+            }
+            else
+            {
+                spRSI.Visible = false;
+                txtRSIUpper.Visible = false;
+            }
+        }
+
+        protected void btnSubmitParameters_Click(object sender, EventArgs e)
+        {
+            DataTable table = new DataTable();
+            table.TableName = "EditedTable";
+            table.Columns.Add("Name", typeof(string));
+            table.Columns.Add("Value", typeof(Decimal));
+
+            foreach (ListViewItem item in dgParameterK2C.Items)
+            {
+                table.Rows.Add(((((System.Web.UI.Control)(item)).FindControl("lblName") as Label)).Text, Convert.ToDecimal((((System.Web.UI.Control)(item)).FindControl("txtColumnValue") as TextBox).Text));
+            }
+            foreach (ListViewItem item in dgParameterW2D.Items)
+            {
+                table.Rows.Add(((((System.Web.UI.Control)(item)).FindControl("lblName") as Label)).Text, Convert.ToDecimal((((System.Web.UI.Control)(item)).FindControl("txtColumnValue") as TextBox).Text));
+            }
+            foreach (ListViewItem item in dgParameterP.Items)
+            {
+                table.Rows.Add(((((System.Web.UI.Control)(item)).FindControl("lblName") as Label)).Text, Convert.ToDecimal((((System.Web.UI.Control)(item)).FindControl("txtColumnValue") as TextBox).Text));
+            }
+
+            var dtResult = getDifferentRecords(dtParameters, table);
+
+            if (dtResult.Rows.Count > 0) 
+            {
+                MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+                try
+                {
+                    MySqlCommand cmd = null;
+                    conn.Open();
+                    cmd = new MySqlCommand();
+                    cmd.Connection = conn;
+                    cmd.CommandText = "SPUpdateParameterTBL";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    foreach (ListViewItem item in dgParameterK2C.Items)
+                    {
+                        var name = "i_" + ((((System.Web.UI.Control)(item)).FindControl("lblName") as Label)).Text;
+                        var value = Convert.ToDecimal((((System.Web.UI.Control)(item)).FindControl("txtColumnValue") as TextBox).Text);
+                        cmd.Parameters.AddWithValue(name, value);
+                        cmd.Parameters[name].Direction = ParameterDirection.Input;
+                        cmd.Parameters[name].MySqlDbType = MySqlDbType.Decimal;
+                    }
+                    foreach (ListViewItem item in dgParameterW2D.Items)
+                    {
+                        var name = "i_" + ((((System.Web.UI.Control)(item)).FindControl("lblName") as Label)).Text;
+                        var value = Convert.ToDecimal((((System.Web.UI.Control)(item)).FindControl("txtColumnValue") as TextBox).Text);
+                        cmd.Parameters.AddWithValue(name, value);
+                        cmd.Parameters[name].Direction = ParameterDirection.Input;
+                        cmd.Parameters[name].MySqlDbType = MySqlDbType.Decimal;
+                    }
+                    foreach (ListViewItem item in dgParameterP.Items)
+                    {
+                        var name = "i_" + ((((System.Web.UI.Control)(item)).FindControl("lblName") as Label)).Text;
+                        var value = Convert.ToDecimal((((System.Web.UI.Control)(item)).FindControl("txtColumnValue") as TextBox).Text);
+                        cmd.Parameters.AddWithValue(name, value);
+                        cmd.Parameters[name].Direction = ParameterDirection.Input;
+                        cmd.Parameters[name].MySqlDbType = MySqlDbType.Decimal;
+                    }
+                    cmd.ExecuteNonQuery();
+                    conn.Close();
+                    ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('値を更新しました。')", true);
+                    GetParameter();
+                }
+                catch (MySql.Data.MySqlClient.MySqlException ex)
+                {
+                    conn.Close();
+                }
+            }
+            else
+                ScriptManager.RegisterClientScriptBlock(this, this.GetType(), "alertMessage", "alert('変更はありません。')", true);
+
+        }
+
+        public DataTable getDifferentRecords(DataTable FirstDataTable, DataTable SecondDataTable)
+        {
+            //Create Empty Table   
+            DataTable ResultDataTable = new DataTable("ResultDataTable");
+
+            //use a Dataset to make use of a DataRelation object   
+            using (DataSet ds = new DataSet())
+            {
+                //Add tables   
+                ds.Tables.AddRange(new DataTable[] { FirstDataTable.Copy(), SecondDataTable.Copy() });
+
+                //Get Columns for DataRelation   
+                DataColumn[] firstColumns = new DataColumn[ds.Tables[0].Columns.Count];
+                for (int i = 0; i < firstColumns.Length; i++)
+                {
+                    firstColumns[i] = ds.Tables[0].Columns[i];
+                }
+
+                DataColumn[] secondColumns = new DataColumn[ds.Tables[1].Columns.Count];
+                for (int i = 0; i < secondColumns.Length; i++)
+                {
+                    secondColumns[i] = ds.Tables[1].Columns[i];
+                }
+
+                //Create DataRelation   
+                DataRelation r1 = new DataRelation(string.Empty, firstColumns, secondColumns, false);
+                ds.Relations.Add(r1);
+
+                DataRelation r2 = new DataRelation(string.Empty, secondColumns, firstColumns, false);
+                ds.Relations.Add(r2);
+
+                //Create columns for return table   
+                for (int i = 0; i < FirstDataTable.Columns.Count; i++)
+                {
+                    ResultDataTable.Columns.Add(FirstDataTable.Columns[i].ColumnName, FirstDataTable.Columns[i].DataType);
+                }
+
+                //If FirstDataTable Row not in SecondDataTable, Add to ResultDataTable.   
+                ResultDataTable.BeginLoadData();
+                foreach (DataRow parentrow in ds.Tables[0].Rows)
+                {
+                    DataRow[] childrows = parentrow.GetChildRows(r1);
+                    if (childrows == null || childrows.Length == 0)
+                        ResultDataTable.LoadDataRow(parentrow.ItemArray, true);
+                }
+
+                //If SecondDataTable Row not in FirstDataTable, Add to ResultDataTable.   
+                foreach (DataRow parentrow in ds.Tables[1].Rows)
+                {
+                    DataRow[] childrows = parentrow.GetChildRows(r2);
+                    if (childrows == null || childrows.Length == 0)
+                        ResultDataTable.LoadDataRow(parentrow.ItemArray, true);
+                }
+                ResultDataTable.EndLoadData();
+            }
+
+            return ResultDataTable;
+        }  
+        protected void btnEditParameters_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnResetParameters_Click(object sender, EventArgs e)
+        {
+            GetParameter();
+        }
+
+        protected void txtColumnValue_TextChanged(object sender, EventArgs e)
+        {
+            ((System.Web.UI.WebControls.WebControl)(sender)).ForeColor = Color.Red;
+            ((System.Web.UI.WebControls.WebControl)(sender)).BorderColor = Color.Red;
+        }
+
+        protected void btnResetFilter_Click(object sender, EventArgs e)
+        {
+            ResetReportFilters();
+            GetReports();
+        }
+
+        protected void uploadStock_Click(object sender, EventArgs e)
+        {
+           
+            if (FileUpload2.PostedFile.FileName.Length > 0)
+            {
+                //Upload and save the file
+                string csvPath = Server.MapPath("~/Files/") + Path.GetFileName(FileUpload2.PostedFile.FileName);
+                FileUpload2.SaveAs(csvPath);
+
+                DataTable dt = new DataTable();
+                dt.Columns.AddRange(new DataColumn[9] { 
+                    new DataColumn("PriceDate",typeof(string)) ,
+            new DataColumn("MarketCode", typeof(string)),
+            new DataColumn("StockCode", typeof(string)),
+            new DataColumn("SockName",typeof(string)) ,
+            new DataColumn("PriceOpen",typeof(string)) ,
+            new DataColumn("PriceHigh",typeof(string)) ,
+            new DataColumn("PriceLow",typeof(string)) ,
+            new DataColumn("PriceClose",typeof(string)),
+            new DataColumn("Volume",typeof(string))
+            });
+
+
+                string csvData = File.ReadAllText(csvPath);
+                if (txtUpdatedStockCode.Text.Length > 0)
+                {
+                    if (ValidateCsv(csvData))
+                    {
+
+                        var rows = csvData.Split('\n');
+                        var rowLength = rows.Length;
+                        for (int j = 3; j < rowLength; j++)
+                        {
+                            if (!string.IsNullOrEmpty(rows[j]))
+                            {
+                                dt.Rows.Add();
+
+                                List<string> cells = new List<string>();
+                                cells = rows[j].Split(',').ToList();
+                                var cellLength = 0;
+
+                                cells[8] = cells[8].Split('\r')[0];
+                                cellLength = cells.Count;
+                                
+                                for (int i = 0; i < cellLength; i++)
+                                {
+                                    if (!String.IsNullOrEmpty(cells[i]))
+                                        dt.Rows[dt.Rows.Count - 1][i] = cells[i];
+                                }
+                            }
+                        }
+
+                        MySql.Data.MySqlClient.MySqlConnection conn = new MySqlConnection(GetConnectionString());
+                        MySqlCommand cmd = null;
+
+                        conn.Open();
+
+                        try
+                        {
+                            foreach (DataRow row in dt.Rows)
+                            {
+                                //Console.WriteLine("Connecting to MySQL...");
+                                cmd = new MySqlCommand();
+
+                                cmd.Connection = conn;
+
+                                cmd.CommandText = "SPInsertStockTransaction";
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                if (!String.IsNullOrEmpty(row[0].ToString()) && !String.IsNullOrEmpty(row[1].ToString()))
+                                {
+                                    cmd.Parameters.AddWithValue("i_PriceDate", DateTime.Parse(row[0].ToString()).ToString("yyyy-MM-dd"));
+                                    cmd.Parameters["i_PriceDate"].MySqlDbType = MySqlDbType.Date;
+                                    cmd.Parameters["i_PriceDate"].Direction = ParameterDirection.Input;
+
+                                    cmd.Parameters.AddWithValue("i_MarketCode", row[1]);
+                                    cmd.Parameters["i_MarketCode"].Direction = ParameterDirection.Input;
+                                    cmd.Parameters["i_MarketCode"].MySqlDbType = MySqlDbType.VarChar;
+
+                                    cmd.Parameters.AddWithValue("i_StockCode", row[2]);
+                                    cmd.Parameters["i_StockCode"].MySqlDbType = MySqlDbType.VarChar;
+                                    cmd.Parameters["i_StockCode"].Direction = ParameterDirection.Input;
+
+                                    cmd.Parameters.AddWithValue("i_StockName", row[3]);
+                                    cmd.Parameters["i_StockCode"].MySqlDbType = MySqlDbType.VarChar;
+                                    cmd.Parameters["i_StockCode"].Direction = ParameterDirection.Input;
+
+                                    cmd.Parameters.AddWithValue("i_PriceOpen", (row[4]));
+                                    cmd.Parameters["i_PriceOpen"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceOpen"].Direction = ParameterDirection.Input;
+
+                                    cmd.Parameters.AddWithValue("i_PriceHigh", (row[5]));
+                                    cmd.Parameters["i_PriceHigh"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceHigh"].Direction = ParameterDirection.Input;
+
+                                    cmd.Parameters.AddWithValue("i_PriceLow", (row[6]));
+                                    cmd.Parameters["i_PriceLow"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceLow"].Direction = ParameterDirection.Input;
+
+                                    cmd.Parameters.AddWithValue("i_PriceClose", (row[7]));
+                                    cmd.Parameters["i_PriceClose"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceClose"].Direction = ParameterDirection.Input;
+
+                                    cmd.Parameters.AddWithValue("i_PriceVolumn", (row[8]));
+                                    cmd.Parameters["i_PriceVolumn"].MySqlDbType = MySqlDbType.Decimal;
+                                    cmd.Parameters["i_PriceVolumn"].Direction = ParameterDirection.Input;
+
+                                    //Add the output parameter to the command object
+
+                                    cmd.Parameters.Add(new MySqlParameter("o_Flag", MySqlDbType.String));
+                                    cmd.Parameters["o_Flag"].Direction = ParameterDirection.Output;
+
+                                    cmd.Parameters.Add(new MySqlParameter("o_ErrorCode", MySqlDbType.String));
+                                    cmd.Parameters["o_ErrorCode"].Direction = ParameterDirection.Output;
+
+                                    cmd.Parameters.Add(new MySqlParameter("o_ErrorDescription", MySqlDbType.String));
+                                    cmd.Parameters["o_ErrorDescription"].Direction = ParameterDirection.Output;
+                                    cmd.ExecuteNonQuery();
+
+                                   
+                                }
+                                else
+                                {
+
+                                }
+
+                            }
+
+                            try
+                            {
+                                // MySqlCommand cmd = null;
+                                cmd = new MySqlCommand();
+                                cmd.Connection = conn;
+                                cmd.CommandText = "UpdateConfigurationTable";
+                                cmd.CommandType = CommandType.StoredProcedure;
+
+                                cmd.ExecuteNonQuery();
+                            }
+                            catch (MySql.Data.MySqlClient.MySqlException exi)
+                            {
+                                conn.Close();
+
+                            }
+                            //cmd.Dispose();
+                            conn.Close();
+                            errorMsgStock.InnerText = "ファイルをアップロードしました。";
+                        }
+                        catch (MySql.Data.MySqlClient.MySqlException ex)
+                        {
+                            if (ex.Message == "Market Code does not exists")
+                            {
+                                errorMsgStock.InnerText = "市場名が存在しません。";
+                            }
+                            else if (ex.Message == "Stock Code does not exists")
+                            {
+                                errorMsgStock.InnerText = "銘柄コードが存在しません。";
+                            }
+                            else if (ex.Message == "Column 'MarketCode' cannot be null")
+                            {
+                                errorMsgStock.InnerText = "未登録の市場が見つかりました。ファイルアップロードができません。";
+                            }
+                            else
+                                errorMsgStock.InnerText = "エラーが発生しました。";// ex.Message;
+                            
+                            conn.Close();
+                        }
+
+                    }
+                    else
+                    {
+                        errorMsgStock.InnerText = "ファイルフォーマットは無効です。";
+                    }
+                }
+                else
+                {
+                    errorMsgStock.InnerText = "銘柄コードを入力してください。";
+                }
+            }
+            else
+            {
+                errorMsgStock.InnerText = "ファイルを指定してください。";
+            }
+
+        
         }
 
     }

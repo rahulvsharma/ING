@@ -30,6 +30,10 @@
         .HeaderRowStyle {
         
         }
+        .right{
+            float:right;
+            text-align:right;
+        }
     </style>
     <script>
 
@@ -299,6 +303,7 @@
                         <li id="tabHeader_2">計算</li>
                         <li id="tabHeader_3">SCReening</li>
                         <li id="tabHeader_4">市場・銘柄登録</li>
+                        <li id="tabHeader_5">パラメータ設定</li>
                     </ul>
                 </div>
                 <div id="tabscontent">
@@ -317,7 +322,19 @@
                             <br />
                             <span runat="server" id="errorMsg"></span>
                         </div>
-
+                        <div id="stockUpdatePlaceholder" style="margin-top: 100px;">
+                            <label class="control-label marginRight" style="margin-left: 10px;"><b>銘柄コード: </b></label>
+                            <asp:TextBox ID="txtUpdatedStockCode" Width="85" runat="server" onkeypress="return CheckNumeric(this)" ></asp:TextBox>
+                            <br />
+                             <div style="margin-top: 20px;">
+                            <label class="control-label marginRight"><b>ファイル選択: </b></label>
+                            <asp:FileUpload ID="FileUpload2" runat="server" CssClass="custom-file-input Cntrl1" />
+                                 </div>
+                            <br />
+                            <asp:Button Text="日付・ファイル登録" style="margin-left: 80px;margin-top: 0px;" ID="uploadStock" OnClick="uploadStock_Click" runat="server" class="btn" />
+                            <br />
+                            <span runat="server" id="errorMsgStock"></span>
+                        </div>
                     </div>
 
                     <div class="tabpage" id="tabpage_2">
@@ -393,27 +410,69 @@
                             <div id="panel_placeholder" >
                                 <span>記号:</span>
                                 <asp:DropDownList ID="ddlFilter" runat="server">
-                                    <asp:ListItem>全て</asp:ListItem>
-                                    <asp:ListItem>△</asp:ListItem>
-                                    <asp:ListItem>◎</asp:ListItem>
-                                    <asp:ListItem>空白</asp:ListItem>
+                                    <asp:ListItem Value="0">全て</asp:ListItem>
+                                    <asp:ListItem Value="1">△</asp:ListItem>
+                                    <asp:ListItem Value="2">◎</asp:ListItem>
+                                    <asp:ListItem Value="3">空白</asp:ListItem>
                                 </asp:DropDownList>
 
                                 <span style="margin-left:20px;">RSI(14):</span>
-                                <asp:TextBox ID="txtRSI" Width="50" OnTextChanged="txtRSI_TextChanged" runat="server" />
+                                <asp:TextBox ID="txtRSILower" Width="50" runat="server" />
+                                <span runat="server" id="spRSI">-</span>
+                                <asp:TextBox ID="txtRSIUpper" Width="50" runat="server" />
 
-                                <asp:DropDownList ID="ddlRSIFilter" runat="server">
+                                <asp:DropDownList ID="ddlRSIFilter" AutoPostBack="true" OnSelectedIndexChanged="ddlRSIFilter_SelectedIndexChanged" runat="server">
                                     <asp:ListItem Value="0">全て</asp:ListItem>
                                     <asp:ListItem Value="1">以上</asp:ListItem>
                                     <asp:ListItem Value="2">以下</asp:ListItem>
+                                    <asp:ListItem Value="3">範囲</asp:ListItem>
                                 </asp:DropDownList>
 
-                                <asp:Button ID="btnGetReport" runat="server" OnClick="btnGetReport_Click" Text="検索" />
+
+
+                                 <span style="margin-left:20px;">値幅:</span>
+                                <asp:TextBox ID="txtPriceRangeLower" Width="50" runat="server" />
+                                  <span runat="server" id="spPriceRange">-</span>
+                                <asp:TextBox ID="txtPriceRangeUpper" Width="50" runat="server" />
+
+                                <asp:DropDownList ID="ddlPriceRange" AutoPostBack="true" OnSelectedIndexChanged="ddlPriceRange_SelectedIndexChanged" runat="server">
+                                    <asp:ListItem Value="0">全て</asp:ListItem>
+                                    <asp:ListItem Value="1">以上</asp:ListItem>
+                                    <asp:ListItem Value="2">以下</asp:ListItem>
+                                    <asp:ListItem Value="3">範囲</asp:ListItem>
+                                </asp:DropDownList>
+
+                                 <span style="margin-left:20px;">25 SMA:</span>
+                                <asp:TextBox ID="txt25SMALower" Width="50" runat="server" />
+                                  <span runat="server" id="sp25SMA">-</span>
+                                <asp:TextBox ID="txt25SMAUpper" Width="50" runat="server" />
+
+                                <asp:DropDownList ID="ddl25SMAFilter" AutoPostBack="true" OnSelectedIndexChanged="ddl25SMAFilter_SelectedIndexChanged" runat="server">
+                                    <asp:ListItem Value="0">全て</asp:ListItem>
+                                    <asp:ListItem Value="1">以上</asp:ListItem>
+                                    <asp:ListItem Value="2">以下</asp:ListItem>
+                                    <asp:ListItem Value="3">範囲</asp:ListItem>
+                                </asp:DropDownList>
+
+                                 <span style="margin-left:20px;">VR(25):</span>
+                                <asp:TextBox ID="txtVR25Lower" Width="50" runat="server" />
+                                  <span runat="server" id="spVR25">-</span>
+                                <asp:TextBox ID="txtVR25Upper" Width="50" runat="server" />
+
+                                <asp:DropDownList ID="ddlVR25Filter" AutoPostBack="true" OnSelectedIndexChanged="ddlVR25Filter_SelectedIndexChanged" runat="server">
+                                    <asp:ListItem Value="0">全て</asp:ListItem>
+                                    <asp:ListItem Value="1">以上</asp:ListItem>
+                                    <asp:ListItem Value="2">以下</asp:ListItem>
+                                    <asp:ListItem Value="3">範囲</asp:ListItem>
+                                </asp:DropDownList>
+
+                                <asp:Button class="btn" ID="btnGetReport" runat="server" OnClick="btnGetReport_Click" Text="検索" />
+                                <asp:Button class="btn" ID="btnResetFilter" runat="server" OnClick="btnResetFilter_Click" Text="リセット" />
                                 <%--<asp:Button ID="btnGenerateReport" runat="server" OnClick="btnGenerateReport_Click" Text="Resultテーブル生成" />--%>
                             </div>
                             <div id="placeholder123" style="overflow: overlay;" runat="server">
 
-                                <asp:GridView PageSize="16" OnRowDataBound="dgMW_RowDataBound" AutoGenerateColumns="true" OnPageIndexChanging="dgMW_PageIndexChanging"
+                                <asp:GridView PageSize="25" OnRowDataBound="dgMW_RowDataBound" AutoGenerateColumns="true" OnPageIndexChanging="dgMW_PageIndexChanging"
                                     ID="dgMW" AllowSorting="true" OnSorting="dgMW_Sorting" CssClass="Grid" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt" runat="server" AllowPaging="true">
                                     <SelectedRowStyle ForeColor="White" Font-Bold="True" BackColor="#9471DE"></SelectedRowStyle>
                                     <RowStyle ForeColor="Black" BackColor="#DEDFDE"></RowStyle>
@@ -430,44 +489,196 @@
                     <div class="tabpage" id="tabpage_4">
                         <div id="dvMarketMaster">
                             <span><b>市場情報入力:</b></span>
-                            <br /><br />
-                            <span style="margin-left:20px;">市場名:</span>
+                            <br />
+                            <br />
+                            <span style="margin-left: 20px;">市場名:</span>
                             <asp:TextBox runat="server" Width="150" ID="txtMarketName" />
-                            <br /><br />
-                            <asp:Button style="margin-left:66px;" Width="150" Text="市場登録" ID="btnSubmitMarketMaster" OnClick="btnSubmitMarketMaster_Click" runat="server" />
-                            <br /><br />
-                            <span runat="server" ID="lblMarketMaster" />
-                            <br /><br />
-                            <br /><br />
+                            <br />
+                            <br />
+                            <asp:Button Style="margin-left: 66px;" Width="150" class="btn" Text="市場登録" ID="btnSubmitMarketMaster" OnClick="btnSubmitMarketMaster_Click" runat="server" />
+                            <br />
+                            <br />
+                            <span runat="server" id="lblMarketMaster" />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
                         </div>
                         <br />
                         <div id="dvStockMaster">
                             <span><b>銘柄情報入力:</b></span>
-                            <br /><br />
+                            <br />
+                            <br />
                             <span>銘柄コード:</span>
                             <asp:TextBox Width="150" ID="txtStockCode" runat="server" />
-                            <br /><br />
-                            <span style="margin-left:19px;">銘柄名:</span>
+                            <br />
+                            <br />
+                            <span style="margin-left: 19px;">銘柄名:</span>
                             <asp:TextBox Width="150" ID="txtStockName" runat="server" />
-                            <br /><br />
+                            <br />
+                            <br />
                             <span>銘柄タイプ:</span>
                             <asp:TextBox Width="150" ID="txtStockType" runat="server" />
-                            <br /><br />
-                            <span style="margin-left:19px;">市場名:</span>
+                            <br />
+                            <br />
+                            <span style="margin-left: 19px;">市場名:</span>
                             <asp:DropDownList Width="150" ID="ddlMarketName" runat="server" />
-                            <br /><br />
-                            <asp:Button style="margin-left:66px;" Width="150" Text="銘柄登録" ID="btnSubmitStockMaster" OnClick="btnSubmitStockMaster_Click" runat="server" />
-                            <br /><br />
-                            <span runat="server" ID="lblStockMaster" />
-                            <br /><br />
-                            <br /><br />
+                            <br />
+                            <br />
+                            <asp:Button Style="margin-left: 66px;" Width="150" class="btn" Text="銘柄登録" ID="btnSubmitStockMaster" OnClick="btnSubmitStockMaster_Click" runat="server" />
+                            <br />
+                            <br />
+                            <span runat="server" id="lblStockMaster" />
+                            <br />
+                            <br />
+                            <br />
+                            <br />
                         </div>
                     </div>
+
+                    <div class="tabpage" id="tabpage_5">
+                        <div> 
+                            <asp:Button class="btn" Width="100" ID="btnSubmitParameters" runat="server" Text="保存" OnClick="btnSubmitParameters_Click" />
+                            <asp:Button class="btn" Width="100" ID="btnResetParameters" runat="server" Text="リセット" OnClick="btnResetParameters_Click" />
+                        </div>
+
+                        <div style="width: 300px; float: left; height: 500px; margin: 5px; overflow-y: auto;">
+                            <asp:ListView EnableTheming="true" ID="dgParameterK2C" runat="server">
+                                <LayoutTemplate>
+                                    <table class="Grid" runat="server" id="table1">
+                                        <thead>
+                                            <tr runat="server" id="headerRow">
+                                                <th style="text-align:left;">Name</th>
+                                                <th style="text-align:right;">Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr runat="server" id="groupPlaceholder">
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </LayoutTemplate>
+                                <GroupTemplate>
+                                    <tr runat="server" id="tableRow">
+                                        <td runat="server" id="itemPlaceholder" />
+                                    </tr>
+                                </GroupTemplate>
+                                <ItemTemplate>
+                                    <td class="Gridtd" id="td1" runat="server">
+                                        <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                                        </td>
+                                    <td class="Gridtd" id="td2" runat="server">
+                                        <asp:TextBox Width="100" CssClass="right" ID="txtColumnValue" onkeypress="return CheckNumeric(this)" OnTextChanged="txtColumnValue_TextChanged" AutoPostBack="true" runat="server" Text='<%# Eval("Value") %>'></asp:TextBox>
+                                        <%--<asp:Label ID="lblValueName" CssClass="right" runat="server" Text='<%# Eval("Value") %>'></asp:Label>--%>
+                                    </td>
+                                </ItemTemplate>
+                                <EmptyDataTemplate>
+                                    <p>
+                                        No parameters found.
+                                    </p>
+                                </EmptyDataTemplate>
+                            </asp:ListView>
+                            </div>
+                        <div style="width:300px; float:left; height:500px; margin:5px; overflow-y:auto;">
+                            <asp:ListView EnableTheming="true" ID="dgParameterW2D" runat="server">
+                                <LayoutTemplate>
+                                    <table class="Grid" runat="server" id="table1">
+                                        <thead>
+                                            <tr runat="server" id="headerRow">
+                                                <th style="text-align:left;">Name</th>
+                                                <th style="text-align:right;">Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr runat="server" id="groupPlaceholder">
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </LayoutTemplate>
+                                <GroupTemplate>
+                                    <tr runat="server" id="tableRow">
+                                        <td class="Gridtd" runat="server" id="itemPlaceholder" />
+                                    </tr>
+                                </GroupTemplate>
+                                <ItemTemplate>
+                                    <td class="Gridtd" id="td1" runat="server">
+                                        <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                                        </td>
+                                    <td class="Gridtd" id="td2" runat="server">
+                                        <asp:TextBox Width="100" CssClass="right" ID="txtColumnValue" onkeypress="return CheckNumeric(this)" OnTextChanged="txtColumnValue_TextChanged" AutoPostBack="true" runat="server" Text='<%# Eval("Value") %>'></asp:TextBox>
+                                        <%--<asp:Label ID="lblValueName" CssClass="right" runat="server" Text='<%# Eval("Value") %>'></asp:Label>--%>
+                                    </td>
+                                </ItemTemplate>
+                                <EmptyDataTemplate>
+                                    <p>
+                                        No parameters found.
+                                    </p>
+                                </EmptyDataTemplate>
+                            </asp:ListView>
+                            </div>
+                       <div style="width:300px; float:left; height:500px; margin:5px; overflow-y:auto;">
+                            <asp:ListView EnableTheming="true" ID="dgParameterP" runat="server">
+                                <LayoutTemplate>
+                                   <table class="Grid" runat="server" id="table1">
+                                        <thead>
+                                            <tr runat="server" id="headerRow">
+                                                <th style="text-align:left;">Name</th>
+                                                <th style="text-align:right;">Value</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr runat="server" id="groupPlaceholder">
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </LayoutTemplate>
+                                <GroupTemplate>
+                                    <tr runat="server" id="tableRow">
+                                        <td runat="server" id="itemPlaceholder" />
+                                    </tr>
+                                </GroupTemplate>
+                                <ItemTemplate>
+                                    <td class="Gridtd" id="td1" runat="server">
+                                        <asp:Label ID="lblName" runat="server" Text='<%# Eval("Name") %>'></asp:Label>
+                                        </td>
+                                    <td class="Gridtd" id="td2" runat="server">
+                                        <asp:TextBox Width="100" CssClass="right" ID="txtColumnValue" onkeypress="return CheckNumeric(this)" OnTextChanged="txtColumnValue_TextChanged" AutoPostBack="true" runat="server" Text='<%# Eval("Value") %>'></asp:TextBox>
+                                        <%--<asp:Label ID="lblValueName" CssClass="right" runat="server" Text='<%# Eval("Value") %>'></asp:Label>--%>
+                                    </td>
+                                </ItemTemplate>
+                                <EmptyDataTemplate>
+                                    <p>
+                                        No parameters found.
+                                    </p>
+                                </EmptyDataTemplate>
+                            </asp:ListView>
+                            </div>
+                    <%--<asp:Button ID="btnEditParameters" runat="server" Text="Edit" OnClick="btnEditParameters_Click" />--%>
+                        
+                    </div>
+
                 </div>
                 <asp:HiddenField ID="hidTAB" runat="server" Value="tabHeader_1" />
             </div>
         </form>
         <script>
+            function CheckNumeric(evt) {
+                var charCode = (evt.which) ? evt.which : event.keyCode
+                if (charCode > 31 && (charCode < 48 || charCode > 57) && charCode != 46 && charCode != 45)
+                    return false;
+                
+                if (charCode == 46) {
+                    if (evt.value.indexOf('.') > -1)
+                        return false;
+                }
+
+                if (charCode == 45) {
+                    if (evt.value.indexOf('-') > -1)
+                        return false;
+                }
+                return true;
+            }
+
             $(function () {
                 $('#datePicker').datepicker({
                     defaultDate: new Date(),
@@ -593,6 +804,7 @@
                 document.getElementById("tabpage_" + 2).style.display = "none";
                 document.getElementById("tabpage_" + 3).style.display = "none";
                 document.getElementById("tabpage_" + 4).style.display = "none";
+                document.getElementById("tabpage_" + 5).style.display = "none";
 
                 var ident = navitem.id.split("_")[1];
                 //add class of activetabheader to new active tab and show contents
