@@ -13,7 +13,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 16:25:12</publishTime>
     </File>
     <File Include="bin/ChartFTP.dll">
-      <publishTime>11/18/2015 10:20:53</publishTime>
+      <publishTime>12/14/2015 16:47:21</publishTime>
     </File>
     <File Include="bin/MySql.Data.Entity.EF6.dll">
       <publishTime>06/19/2015 01:01:32</publishTime>
@@ -40,7 +40,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/07/2015 11:35:30</publishTime>
     </File>
     <File Include="index.aspx">
-      <publishTime>11/17/2015 17:17:48</publishTime>
+      <publishTime>12/14/2015 16:37:50</publishTime>
     </File>
     <File Include="ING/images/main-bg.png">
       <publishTime>09/03/2015 10:18:55</publishTime>
@@ -159,8 +159,11 @@ by editing this MSBuild file. In order to learn more about this please visit htt
     <File Include="jsgrid.min.js">
       <publishTime>10/13/2015 09:35:53</publishTime>
     </File>
+    <File Include="loader.gif">
+      <publishTime>12/14/2015 12:46:31</publishTime>
+    </File>
     <File Include="style.css">
-      <publishTime>11/17/2015 16:07:19</publishTime>
+      <publishTime>12/14/2015 16:38:37</publishTime>
     </File>
     <File Include="tabs.js">
       <publishTime>10/07/2015 12:27:35</publishTime>
@@ -1432,7 +1435,7 @@ by editing this MSBuild file. In order to learn more about this please visit htt
       <publishTime>10/20/2015 15:37:31</publishTime>
     </File>
     <File Include="Web.config">
-      <publishTime>09/08/2015 12:00:16</publishTime>
+      <publishTime>12/14/2015 14:53:37</publishTime>
     </File>
   </ItemGroup>
 </Project>

@@ -19,6 +19,12 @@
             float: left;
         }
 
+        h3 {
+            background-color: #1688D7;
+            color: white;
+            /*width: 365px;*/
+        }
+
         .marginRight {
             margin-right: 5px;
         }
@@ -45,6 +51,24 @@
                 useUTC: false
             }
         });
+
+        function ShowProgress() {
+            setTimeout(function () {
+                var modal = $('<div />');
+                modal.addClass("modal");
+                $('body').append(modal);
+                var loading = $(".loading");
+                loading.show();
+                var top = Math.max($(window).height() / 2 - loading[0].offsetHeight / 2, 0);
+                var left = Math.max($(window).width() / 2 - loading[0].offsetWidth / 2, 0);
+                loading.css({ top: top, left: left });
+                $("#lblScreeningMessage").html("現在 " + $('#datePicker').val() + " データのスクリーニング中。しばらくお待ちください");
+            }, 200);
+        }
+
+        function HideProgress() {
+            $(".loading").hide();
+        }
 
         function Draw(data, vol, chartSeries) {
             // split the data set into ohlc and volume
@@ -205,6 +229,7 @@
 
 
         var chartData = null;
+        var chartData1D = null;
         var chartData5D = null;
         var chartData25D = null;
         var chartData75D = null;
@@ -235,6 +260,7 @@
         function fun() {
             count = 0;
             PageMethods.GetChartData(onSucceed, onError);
+            PageMethods.GetChart1DData(onSucceed1D, onError);
             PageMethods.GetChart5DData(onSucceed5D, onError);
             PageMethods.GetChart25DData(onSucceed25D, onError);
             PageMethods.GetChart75DData(onSucceed75D, onError);
@@ -245,6 +271,11 @@
         }
         function onSucceed(result) {
             chartData = JSON.parse(result);
+            count++;
+            checkCountAndDraw(count);
+        }
+        function onSucceed1D(result) {
+            chartData1D = JSON.parse(result);
             count++;
             checkCountAndDraw(count);
         }
@@ -308,8 +339,10 @@
                 </div>
                 <div id="tabscontent">
                     <div class="tabpage" id="tabpage_1">
-                        <h2></h2>
-
+                        <label class="control-label marginRight" style="margin-left: 10px;">
+                            <h3 style="width:365px;">ファイル登録</h3>
+                        </label>
+                        <br />
                         <b style="margin-left: 45px;" class="marginRight">日付:</b>
                         <asp:TextBox runat="server" ID="datePicker" CssClass="dtPicker" ViewStateMode="Enabled" OnTextChanged="datePicker_TextChanged" />
                         <asp:HiddenField ID="myDateField" runat="server" />
@@ -317,12 +350,23 @@
                             <label class="control-label marginRight"><b>ファイル選択: </b></label>
                             <asp:FileUpload ID="FileUpload1" runat="server" CssClass="custom-file-input Cntrl1" />
                             <br />
-                            <asp:Button Text="日付・ファイル登録" style="margin-left: 80px;margin-top: 20px;" ID="upload" OnClick="Upload" runat="server" class="btn" />
+                            <asp:Button Text="日付・ファイル登録" OnClientClick="ShowProgress();" Style="margin-left: 80px; margin-top: 20px;" ID="upload" OnClick="Upload" runat="server" class="btn" />
                             <%--<asp:Button Text="削除" style="margin-left: 10px;margin-top: 20px;" ID="btnDelete" OnClick="btnDelete_Click" runat="server" class="btn" />--%>
                             <br />
                             <span runat="server" id="errorMsg"></span>
+
+
+                            <div class="loading" align="center">
+                                Loading. Please wait.<br />
+                                <br />
+                                <img src="loader.gif" alt="" />
+                                <br />
+                                <span style="margin-top:7px;" runat="server" id="lblScreeningMessage"></span>
+                            </div>
                         </div>
-                        <div id="stockUpdatePlaceholder" style="margin-top: 100px;">
+                        <div id="stockUpdatePlaceholder" style="margin-top: 30px;">
+                            <label class="control-label marginRight" style="margin-left: 10px;"><h3 style="width:365px;">銘柄上書</h3></label>
+                            <br />
                             <label class="control-label marginRight" style="margin-left: 10px;"><b>銘柄コード: </b></label>
                             <asp:TextBox ID="txtUpdatedStockCode" Width="85" runat="server" onkeypress="return CheckNumeric(this)" ></asp:TextBox>
                             <br />
@@ -335,6 +379,10 @@
                             <br />
                             <span runat="server" id="errorMsgStock"></span>
                         </div>
+
+                       
+                            
+                          
                     </div>
 
                     <div class="tabpage" id="tabpage_2">
@@ -358,7 +406,7 @@
                             <div class="columnsContainer">
 
                                 <div class="leftColumn" id="dvleftColumn" runat="server">
-                                    <h2 style="margin-left: -13px;">銘柄一覧</h2>
+                                    <h3 style="margin-left: -13px;">銘柄一覧</h3>
                                     <div id="scrip-list" style="margin-left: -13px;">
                                         <div id="Div1" runat="server" style="border-right: 1px solid grey;">
                                             <asp:GridView PageSize="12" OnRowDataBound="GridView_RowDataBound" AutoGenerateColumns="false" OnPageIndexChanging="dgScripList_PageIndexChanging" ID="dgScripList"
@@ -387,6 +435,7 @@
                                     <div class="main-box">
 
                                         <div style="float: left">
+                                            <input type="checkbox" class="Button" id="rdToday" value="1" name="現在値" /><span>現在値</span>
                                             <input type="checkbox" class="Button" id="rd5day" value="5" name="5日平均" /><span>5日平均</span>
                                             <input type="checkbox" class="Button" id="rd25D" value="25" name="25日平均" /><span>25日平均</span>
                                             <input type="checkbox" class="Button" id="rd75D" value="75" name="75日平均" /><span>75日平均</span>
@@ -405,7 +454,7 @@
                     </div>
 
                     <div class="tabpage" id="tabpage_3">
-                        <h2>SCReening</h2>
+                        <%--<h2>SCReening</h2>--%>
                         <div id="scrip-list1" style="height: 420px; padding: 0px; position: relative;">
                             <div id="panel_placeholder" >
                                 <span>記号:</span>
@@ -469,10 +518,12 @@
                                 <asp:Button class="btn" ID="btnGetReport" runat="server" OnClick="btnGetReport_Click" Text="検索" />
                                 <asp:Button class="btn" ID="btnResetFilter" runat="server" OnClick="btnResetFilter_Click" Text="リセット" />
                                 <%--<asp:Button ID="btnGenerateReport" runat="server" OnClick="btnGenerateReport_Click" Text="Resultテーブル生成" />--%>
+                                <br />
+                               <b style="color:darkblue;"> <asp:Label runat="server" ID="lblUpdateMessage" ></asp:Label></b>
                             </div>
                             <div id="placeholder123" style="overflow: overlay;" runat="server">
 
-                                <asp:GridView PageSize="25" OnRowDataBound="dgMW_RowDataBound" AutoGenerateColumns="true" OnPageIndexChanging="dgMW_PageIndexChanging"
+                                <asp:GridView PageSize="20" OnRowDataBound="dgMW_RowDataBound" AutoGenerateColumns="true" OnPageIndexChanging="dgMW_PageIndexChanging"
                                     ID="dgMW" AllowSorting="true" OnSorting="dgMW_Sorting" CssClass="Grid" PagerStyle-CssClass="pgr" AlternatingRowStyle-CssClass="alt" runat="server" AllowPaging="true">
                                     <SelectedRowStyle ForeColor="White" Font-Bold="True" BackColor="#9471DE"></SelectedRowStyle>
                                     <RowStyle ForeColor="Black" BackColor="#DEDFDE"></RowStyle>
@@ -488,7 +539,7 @@
 
                     <div class="tabpage" id="tabpage_4">
                         <div id="dvMarketMaster">
-                            <span><b>市場情報入力:</b></span>
+                            <span><h3 style="width:365px;">市場情報入力</h3></span>
                             <br />
                             <br />
                             <span style="margin-left: 20px;">市場名:</span>
@@ -506,7 +557,7 @@
                         </div>
                         <br />
                         <div id="dvStockMaster">
-                            <span><b>銘柄情報入力:</b></span>
+                            <span><h3 style="width:365px;">銘柄情報入力</h3></span>
                             <br />
                             <br />
                             <span>銘柄コード:</span>
@@ -548,8 +599,8 @@
                                     <table class="Grid" runat="server" id="table1">
                                         <thead>
                                             <tr runat="server" id="headerRow">
-                                                <th style="text-align:left;">Name</th>
-                                                <th style="text-align:right;">Value</th>
+                                                <th style="text-align:left;">パラメータ名</th>
+                                                <th style="text-align:right;">値</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -585,8 +636,8 @@
                                     <table class="Grid" runat="server" id="table1">
                                         <thead>
                                             <tr runat="server" id="headerRow">
-                                                <th style="text-align:left;">Name</th>
-                                                <th style="text-align:right;">Value</th>
+                                                <th style="text-align:left;">パラメータ名</th>
+                                                <th style="text-align:right;">値</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -622,8 +673,8 @@
                                    <table class="Grid" runat="server" id="table1">
                                         <thead>
                                             <tr runat="server" id="headerRow">
-                                                <th style="text-align:left;">Name</th>
-                                                <th style="text-align:right;">Value</th>
+                                                <th style="text-align:left;">パラメータ名</th>
+                                                <th style="text-align:right;">値</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -734,7 +785,12 @@
                 $('.Button').click(function () {
                     //debugger;
                     switch (event.target.value) {
-
+                        case "1":
+                            if (event.target.checked)
+                                chartDataList.push({ key: 1, value: chartData1D, name: event.target.name });
+                            else
+                                removeByAttr(chartDataList, 1);
+                            break;
                         case "5":
                             if (event.target.checked)
                                 chartDataList.push({ key: 5, value: chartData5D, name: event.target.name });

@@ -26,7 +26,7 @@ namespace ChartFTP
                 cbPeriods.Items.Insert(0, new ListItem("75日平均"));
                 cbPeriods.Items.Insert(0, new ListItem("25日平均"));
                 cbPeriods.Items.Insert(0, new ListItem("5日平均"));
-
+                cbPeriods.Items.Insert(0, new ListItem("現在値"));
                 //dvleftColumn.Visible = false;
                 //dvrightColumn.Visible = false;
 
@@ -57,6 +57,7 @@ namespace ChartFTP
         public BackgroundWorker bwProcess = null;
 
         public static string chartData = string.Empty;
+        public static string chartData1D = string.Empty;
         public static string chartData5D = string.Empty;
         public static string chartData25D = string.Empty;
         public static string chartData75D = string.Empty;
@@ -109,6 +110,10 @@ namespace ChartFTP
 
                     cmd.CommandText = "SPSearchStockByfluctuationPercentage";
                     cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.AddWithValue("i_1Days", period1D);
+                    cmd.Parameters["i_1Days"].Direction = ParameterDirection.Input;
+                    cmd.Parameters["i_1Days"].MySqlDbType = MySqlDbType.Int32;
 
                     cmd.Parameters.AddWithValue("i_5Days", period5D);
                     cmd.Parameters["i_5Days"].Direction = ParameterDirection.Input;
@@ -187,7 +192,8 @@ namespace ChartFTP
                 {
                     if (ValidateCsv(csvData))
                     {
-
+                        lblScreeningMessage.InnerText = "現在 " + myDateField.Value + " データのスクリーニング中。しばらくお待ちください";
+                       
                         var rows = csvData.Split('\n');
                         var rowLength = rows.Length;
                         for (int j = 3; j < rowLength; j++)
@@ -224,8 +230,7 @@ namespace ChartFTP
                         MySqlCommand cmd = null;
 
                         conn.Open();
-
-                        try
+                         try
                         {
                             foreach (DataRow row in dt.Rows)
                             {
@@ -283,14 +288,11 @@ namespace ChartFTP
                                     cmd.Parameters.Add(new MySqlParameter("o_ErrorDescription", MySqlDbType.String));
                                     cmd.Parameters["o_ErrorDescription"].Direction = ParameterDirection.Output;
                                     cmd.ExecuteNonQuery();
-
-                                   
                                 }
                                 else
                                 {
 
                                 }
-
                             }
 
                             try
@@ -298,6 +300,7 @@ namespace ChartFTP
                                 // MySqlCommand cmd = null;
                                 cmd = new MySqlCommand();
                                 cmd.Connection = conn;
+                                cmd.CommandTimeout = 3000;
                                 cmd.CommandText = "UpdateConfigurationTable";
                                 cmd.CommandType = CommandType.StoredProcedure;
 
@@ -308,9 +311,10 @@ namespace ChartFTP
                                 conn.Close();
 
                             }
-                            //cmd.Dispose();
+
                             conn.Close();
                             errorMsg.InnerText = "ファイルをアップロードしました。";
+                            lblScreeningMessage.InnerText = "";
                         }
                         catch (MySql.Data.MySqlClient.MySqlException ex)
                         {
@@ -327,11 +331,8 @@ namespace ChartFTP
                                 errorMsg.InnerText = "未登録の市場が見つかりました。ファイルアップロードができません。";
                             }
                             else
-                                errorMsg.InnerText = "エラーが発生しました。";// ex.Message;
-                            //conn.Close();
-                            //break;
-
-                            //errorMsg.InnerText = "ファイルアップロードを成功しました。";
+                                errorMsg.InnerText = "エラーが発生しました。";
+                            lblScreeningMessage.InnerText = "";
 
                             try
                             {
@@ -362,7 +363,6 @@ namespace ChartFTP
                                 conn.Close();
                             }
                         }
-
                     }
                     else
                     {
@@ -506,7 +506,7 @@ namespace ChartFTP
                     cmd.CommandText = "SPGetResultSet";
                     cmd.CommandType = CommandType.StoredProcedure;
 
-                    cmd.Parameters.AddWithValue("i_Symbol", ddlFilter.SelectedItem);
+                    cmd.Parameters.AddWithValue("i_Symbol", ddlFilter.SelectedValue);
                     cmd.Parameters["i_Symbol"].Direction = ParameterDirection.Input;
                     cmd.Parameters["i_Symbol"].MySqlDbType = MySqlDbType.VarChar;
 
@@ -562,8 +562,10 @@ namespace ChartFTP
                     DataSet ds = new DataSet();
                     adp.Fill(ds);
                     dtReport = ds.Tables[0];
+                    
                     dgMW.DataSource = ds.Tables[0];
                     dgMW.DataBind();
+                    lblUpdateMessage.Text = ds.Tables[1].Rows[0][0].ToString().Length > 0 ? DateTime.Parse(ds.Tables[1].Rows[0][0].ToString().Split(' ')[0]).ToString("yyyy-MM-dd") + " のスクリーニングが完了しました。" : "";
                     conn.Close();
                 }
                 catch (MySql.Data.MySqlClient.MySqlException ex)
@@ -713,7 +715,6 @@ namespace ChartFTP
 
         protected void lnkDownload_Click(object sender, EventArgs e)
         {
-
             Button lnkbtn = sender as Button;
             GridViewRow gvrow = lnkbtn.NamingContainer as GridViewRow;
             string username = dgScripList.DataKeys[gvrow.RowIndex].Values.ToString();
@@ -762,18 +763,17 @@ namespace ChartFTP
                 adp.Fill(ds);
                 conn.Close();
 
-                
-                //var data1 = JSON_DataTable(ds.Tables[0]);
                 var data2 = CreateJsonParameters(ds.Tables[0]);
                 if (data2 != null)
                 {
-                    chartData = data2[0];// +"|" + data2[1] + "|" + data2[2] + "|" + data2[3] + "|" + data2[4] + "|" + data2[5] + "|" + data2[6];
-                    chartData5D = data2[1];
-                    chartData25D = data2[2];
-                    chartData75D = data2[3];
-                    chartData150D = data2[4];
-                    chartData200D = data2[5];
-                    chartDataVol = data2[6];
+                    chartData = data2[0];
+                    chartData1D = data2[1];
+                    chartData5D = data2[2];
+                    chartData25D = data2[3];
+                    chartData75D = data2[4];
+                    chartData150D = data2[5];
+                    chartData200D = data2[6];
+                    chartDataVol = data2[7];
                 }
                 ClientScript.RegisterStartupScript(this.GetType(), "fun", "fun();", true);
             }
@@ -788,6 +788,12 @@ namespace ChartFTP
         public static string GetChartData()
         {
             return chartData;
+        }
+
+        [System.Web.Services.WebMethod]
+        public static string GetChart1DData()
+        {
+            return chartData1D;
         }
 
         [System.Web.Services.WebMethod]
@@ -967,6 +973,7 @@ namespace ChartFTP
              * *************************************************************************/
 
             StringBuilder JsonString = new StringBuilder();
+            StringBuilder JsonString1D = new StringBuilder();
             StringBuilder JsonString5D = new StringBuilder();
             StringBuilder JsonString25D = new StringBuilder();
             StringBuilder JsonString75D = new StringBuilder();
@@ -978,6 +985,7 @@ namespace ChartFTP
             if (dt != null && dt.Rows.Count > 0)
             {
                 JsonString.Append("[ ");
+                JsonString1D.Append("[ ");
                 JsonString5D.Append("[ ");
                 JsonString25D.Append("[ ");
                 JsonString75D.Append("[ ");
@@ -988,6 +996,7 @@ namespace ChartFTP
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     JsonString.Append("[ ");
+                    JsonString1D.Append("[ ");
                     JsonString5D.Append("[ ");
                     JsonString25D.Append("[ ");
                     JsonString75D.Append("[ ");
@@ -999,55 +1008,46 @@ namespace ChartFTP
                     {
                         if (j == 0)
                         {
-                            //TimeSpan ts = DateTime.Parse(dt.Rows[i][0].ToString()).Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
-                            //JsonString.Append(ts.TotalMilliseconds.ToString() + ",");
                             JsonString.Append(dt.Rows[i][0].ToString() + ",");
                         }
                         else if (j == 4)
                         {
                             JsonString.Append(dt.Rows[i][j].ToString());
                         }
+                        else if (j == 5)
+                        {
+                            JsonStringVol.Append(dt.Rows[i][0].ToString() + ",");
+                            JsonStringVol.Append(dt.Rows[i][j].ToString());
+                        }
                         else if (j == 6)
                         {
-                            //TimeSpan ts = DateTime.Parse(dt.Rows[i][0].ToString()).Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
-                            //JsonString5D.Append(ts.TotalMilliseconds.ToString() + ",");
-                            JsonString5D.Append(dt.Rows[i][0].ToString() + ",");
-                            JsonString5D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
+                            JsonString1D.Append(dt.Rows[i][0].ToString() + ",");
+                            JsonString1D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
                         }
                         else if (j == 7)
                         {
-                            //TimeSpan ts = DateTime.Parse(dt.Rows[i][0].ToString()).Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
-                            //JsonString25D.Append(ts.TotalMilliseconds.ToString() + ",");
-                            JsonString25D.Append(dt.Rows[i][0].ToString() + ",");
-                            JsonString25D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
+                            JsonString5D.Append(dt.Rows[i][0].ToString() + ",");
+                            JsonString5D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
                         }
                         else if (j == 8)
                         {
-                            //TimeSpan ts = DateTime.Parse(dt.Rows[i][0].ToString()).Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
-                            //JsonString75D.Append(ts.TotalMilliseconds.ToString() + ",");
-                            JsonString75D.Append(dt.Rows[i][0].ToString() + ",");
-                            JsonString75D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
+                            JsonString25D.Append(dt.Rows[i][0].ToString() + ",");
+                            JsonString25D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
                         }
                         else if (j == 9)
                         {
-                            //TimeSpan ts = DateTime.Parse(dt.Rows[i][0].ToString()).Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
-                            //JsonString150D.Append(ts.TotalMilliseconds.ToString() + ",");
-                            JsonString150D.Append(dt.Rows[i][0].ToString() + ",");
-                            JsonString150D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
+                            JsonString75D.Append(dt.Rows[i][0].ToString() + ",");
+                            JsonString75D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
                         }
                         else if (j == 10)
                         {
-                            //TimeSpan ts = DateTime.Parse(dt.Rows[i][0].ToString()).Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
-                            //JsonString200D.Append(ts.TotalMilliseconds.ToString() + ",");
+                            JsonString150D.Append(dt.Rows[i][0].ToString() + ",");
+                            JsonString150D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
+                        }
+                        else if (j == 11)
+                        {
                             JsonString200D.Append(dt.Rows[i][0].ToString() + ",");
                             JsonString200D.Append(dt.Rows[i][j].ToString().Length > 0 ? dt.Rows[i][j].ToString() : "0");
-                        }
-                        else if (j == 5)
-                        {
-                            //TimeSpan ts = DateTime.Parse(dt.Rows[i][0].ToString()).Subtract(new DateTime(1970, 1, 1, 0, 0, 0));
-                            //JsonStringVol.Append(ts.TotalMilliseconds.ToString() + ",");
-                            JsonStringVol.Append(dt.Rows[i][0].ToString() + ",");
-                            JsonStringVol.Append(dt.Rows[i][j].ToString());
                         }
                         else
                         {
@@ -1059,6 +1059,7 @@ namespace ChartFTP
                     if (i == dt.Rows.Count - 1)
                     {
                         JsonString.Append("] ");
+                        JsonString1D.Append("] ");
                         JsonString5D.Append("] ");
                         JsonString25D.Append("] ");
                         JsonString75D.Append("] ");
@@ -1069,6 +1070,7 @@ namespace ChartFTP
                     else
                     {
                         JsonString.Append("], ");
+                        JsonString1D.Append("], ");
                         JsonString5D.Append("], ");
                         JsonString25D.Append("], ");
                         JsonString75D.Append("], ");
@@ -1079,6 +1081,7 @@ namespace ChartFTP
                 }
 
                 JsonString.Append("]");
+                JsonString1D.Append("]");
                 JsonString5D.Append("]");
                 JsonString25D.Append("]");
                 JsonString75D.Append("]");
@@ -1089,6 +1092,7 @@ namespace ChartFTP
                 List<string> lst = new List<string>();
 
                 lst.Add(JsonString.ToString());
+                lst.Add(JsonString1D.ToString());
                 lst.Add(JsonString5D.ToString());
                 lst.Add(JsonString25D.ToString());
                 lst.Add(JsonString75D.ToString());
@@ -1147,6 +1151,13 @@ namespace ChartFTP
                         else
                             period5D = 0;
                         break;
+                    case "現在値":
+                        if (((System.Web.UI.WebControls.ListItem)(item)).Selected)
+                            period1D = 1;
+                        else
+                            period1D = 0;
+                        break;
+
                 }
             }
         }
@@ -1685,6 +1696,7 @@ namespace ChartFTP
 
             return ResultDataTable;
         }  
+        
         protected void btnEditParameters_Click(object sender, EventArgs e)
         {
 

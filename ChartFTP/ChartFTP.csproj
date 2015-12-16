@@ -93,6 +93,7 @@
     <Content Include="jsgrid-theme.min.css" />
     <Content Include="jsgrid.min.css" />
     <Content Include="jsgrid.min.js" />
+    <Content Include="loader.gif" />
     <Content Include="style.css" />
     <Content Include="tabs.js" />
     <Content Include="tabs_old.js" />
